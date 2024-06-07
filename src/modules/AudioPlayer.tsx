@@ -5,7 +5,7 @@ function AudioPlayer() {
     const handleKeyPress = (event: KeyboardEvent) => {
         const key = event.key;
         if (key === "a") {
-            const audio = new Audio(`${process.env.PUBLIC_URL}/audio/tan.mp3`)
+            const audio = new Audio(`${process.env.PUBLIC_URL}/audio/tan-audio.mp3`)
             audio.play()
         }
     };
