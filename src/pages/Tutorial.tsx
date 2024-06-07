@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "../modules/Button";
 import Video from "../modules/Video";
+import Navbar from "../modules/Navbar";
+
 import wave from ".././media/sound-wave.png";
 import "./Tutorial.css";
 
@@ -15,6 +17,7 @@ function Tutorial({ video, setVideo }: TutorialProps) {
 
   return (
     <>
+      <Navbar></Navbar>
       <div className="button-container">
         <Button
           imagesrc={wave}
