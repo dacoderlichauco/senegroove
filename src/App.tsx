@@ -5,8 +5,9 @@ import Button from "./Button";
 import Video from "./Video";
 
 import wave from "./media/sound-wave.png";
-import Tutorial from "./Tutorial";
+import Tutorial from "./pages/Tutorial";
 import AudioButton from "./AudioButton";
+import { Router, Route } from "react-router-dom";
 
 function App() {
   // const [isPlaying, setIsPlaying] = useState(false);

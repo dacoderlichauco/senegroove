@@ -1,42 +1,41 @@
 .button-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center; 
-    align-items: center;    
-    flex-wrap: wrap;    
-    gap: 300px;      
-  }
-  
-  .button-item {
-    /* display: inline-block;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 300px;
+}
+
+.button-item {
+  /* display: inline-block;
     text-align: center;
     margin: 100px; */
-    position: relative;
-    background: #fff;
-    color: black;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 1.5em;
-    letter-spacing: 0.1em;
-    font-weight: 400;
-    padding: 10px 30px;
-    transition: 0.5s;
-  }
+  position: relative;
+  background: #fff;
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  padding: 10px 30px;
+  transition: 0.5s;
+}
 
-  .button-item:hover {
-    background: var(--clr);
-    letter-spacing: 0.25em;
-    box-shadow: 0 0 35px
-  }
-  
-  .button-item img {
-    cursor: pointer;
-    width: 200px; 
-    height: auto; 
-  }
-  
-  .button-item h1 {
-    font-size: 16px; 
-    text-align: center;
-  }
-  
+.button-item:hover {
+  background: var(--clr);
+  letter-spacing: 0.25em;
+  box-shadow: 0 0 35px;
+}
+
+.button-item img {
+  cursor: pointer;
+  width: 200px;
+  height: auto;
+}
+
+.button-item h1 {
+  font-size: 16px;
+  text-align: center;
+}
