@@ -5,6 +5,7 @@ function AudioPlayer() {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       let audio = "none";
+      let play = true;
       const key = event.key;
       if (key === "a") {
         audio = "tan";
@@ -22,12 +23,16 @@ function AudioPlayer() {
         audio = "pax";
       } else if (key === ";") {
         audio = "pin";
+      } else {
+        play = false;
       }
 
-      const audioFile = new Audio(
-        `${process.env.PUBLIC_URL}/audio/${audio}-audio.mp3`
-      );
-      audioFile.play();
+      if (play) {
+        const audioFile = new Audio(
+          `${process.env.PUBLIC_URL}/audio/${audio}-audio.mp3`
+        );
+        audioFile.play();
+      }
     };
 
     window.addEventListener("keydown", handleKeyPress);
