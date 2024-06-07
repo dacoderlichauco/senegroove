@@ -1,31 +1,28 @@
-import React, {useState, useRef } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 import Button from "./Button";
 import Video from "./Video";
 
 import wave from "./media/sound-wave.png";
-import Tutorial from './Tutorial';
-
+import Tutorial from "./Tutorial";
+import AudioButton from "./AudioButton";
 
 function App() {
-
   // const [isPlaying, setIsPlaying] = useState(false);
   // const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const [video, setVideo] = useState(0);
+  const [video, setVideo] = useState("none");
   // const videoRef = useRef<HTMLVideoElement | null>(null);
-
-
 
   return (
     <body>
       <div>
-      {/* <Button imagesrc={wave} video={video} setVideo={setVideo}></Button> */}
-      <Tutorial video={video} setVideo={setVideo}></Tutorial>
-    </div>
+        {/* <Button imagesrc={wave} video={video} setVideo={setVideo}></Button> */}
+        {/* <Tutorial video={video} setVideo={setVideo}></Tutorial> */}
+        <AudioButton></AudioButton>
+      </div>
     </body>
-    
   );
 }
 
