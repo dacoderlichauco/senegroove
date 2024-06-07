@@ -1,13 +1,14 @@
 import React, { useState, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Button from "./Button";
-import Video from "./Video";
+import Button from "./modules/Button";
+import Video from "./modules/Video";
 
 import wave from "./media/sound-wave.png";
 import Tutorial from "./pages/Tutorial";
-import AudioButton from "./AudioButton";
-import { Router, Route } from "react-router-dom";
+import AudioButton from "./modules/AudioButton";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
   // const [isPlaying, setIsPlaying] = useState(false);
@@ -17,13 +18,15 @@ function App() {
   // const videoRef = useRef<HTMLVideoElement | null>(null);
 
   return (
-    <body>
-      <div>
-        {/* <Button imagesrc={wave} video={video} setVideo={setVideo}></Button> */}
-        {/* <Tutorial video={video} setVideo={setVideo}></Tutorial> */}
-        <AudioButton></AudioButton>
-      </div>
-    </body>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route
+          path="/tutorial"
+          element={<Tutorial video={video} setVideo={setVideo} />}
+        ></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

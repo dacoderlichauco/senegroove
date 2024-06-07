@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import Button from ".././Button";
-import Video from ".././Video";
-import wave from "./media/sound-wave.png";
+import Button from "../modules/Button";
+import Video from "../modules/Video";
+import wave from ".././media/sound-wave.png";
 import "./Tutorial.css";
 
 type TutorialProps = {
