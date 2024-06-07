@@ -25,7 +25,7 @@ function AudioPlayer() {
       }
 
       const audioFile = new Audio(
-        `${process.env.PUBLIC_URL}/audio/${audio}.mp3`
+        `${process.env.PUBLIC_URL}/audio/${audio}-audio.mp3`
       );
       audioFile.play();
     };
