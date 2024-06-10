@@ -18,54 +18,79 @@ function Tutorial({ video, setVideo }: TutorialProps) {
     <>
       <Navbar></Navbar>
       <div className="button-container">
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"tan"}
-        ></Button>
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"tet"}
-        ></Button>
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"chex"}
-        ></Button>
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"gin"}
-        ></Button>
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"pax"}
-        ></Button>
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"pin"}
-        ></Button>
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"rwan"}
-        ></Button>
-        <Button
-          imagesrc={wave}
-          video={video}
-          setVideo={setVideo}
-          name={"tek"}
-        ></Button>
+        <div className="circle1">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"tan"}
+          ></Button>
+        </div>
+
+        <div className="circle2">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"tet"}
+          ></Button>
+        </div>
+
+        <div className="circle3">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"chex"}
+          ></Button>
+        </div>
+
+        <div className="circle6">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"pin"}
+          ></Button>
+        </div>
+
+        <div className="circle7">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"rwan"}
+          ></Button>
+        </div>
+
+        <div className="circle8">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"tek"}
+          ></Button>
+        </div>
+      </div>
+
+      <div className="button-container">
+        <div className="circle4">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"gin"}
+          ></Button>
+        </div>
+
+        <div className="circle5">
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"pax"}
+          ></Button>
+        </div>
       </div>
 
       <div className="video-container">

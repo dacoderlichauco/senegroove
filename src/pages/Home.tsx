@@ -7,12 +7,6 @@ function Home() {
   return (
     <>
       <Navbar></Navbar>
-      <AudioPlayer></AudioPlayer>
-      <div>
-        {/* <Button imagesrc={wave} video={video} setVideo={setVideo}></Button> */}
-        {/* <Tutorial video={video} setVideo={setVideo}></Tutorial> */}
-        <AudioButton></AudioButton>
-      </div>
     </>
   );
 }
