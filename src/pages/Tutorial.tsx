@@ -3,6 +3,7 @@ import Button from "../modules/Button";
 import Video from "../modules/Video";
 import Navbar from "../modules/Navbar";
 import wave from ".././media/sound-wave.png";
+import ReactPlayer from "react-player";
 import "./Tutorial.css";
 
 type TutorialProps = {
@@ -12,7 +13,7 @@ type TutorialProps = {
 
 function Tutorial({ video, setVideo }: TutorialProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [level, setLevel] = useState(1);
+  // const [level, setLevel] = useState(1);
 
   return (
     <>
@@ -59,7 +60,7 @@ function Tutorial({ video, setVideo }: TutorialProps) {
             imagesrc={wave}
             video={video}
             setVideo={setVideo}
-            name={"rwan"}
+            name={"gin"}
           ></Button>
         </div>
 
@@ -68,7 +69,7 @@ function Tutorial({ video, setVideo }: TutorialProps) {
             imagesrc={wave}
             video={video}
             setVideo={setVideo}
-            name={"tek"}
+            name={"pax"}
           ></Button>
         </div>
       </div>
@@ -79,7 +80,7 @@ function Tutorial({ video, setVideo }: TutorialProps) {
             imagesrc={wave}
             video={video}
             setVideo={setVideo}
-            name={"gin"}
+            name={"rwan"}
           ></Button>
         </div>
 
@@ -88,17 +89,18 @@ function Tutorial({ video, setVideo }: TutorialProps) {
             imagesrc={wave}
             video={video}
             setVideo={setVideo}
-            name={"pax"}
+            name={"tek"}
           ></Button>
         </div>
       </div>
 
       <div className="video-container">
         {video !== "none" && (
-          <Video
-            videosrc={`${process.env.PUBLIC_URL}/senegroove-media/${video}.mp4`}
-            setVideo={setVideo}
-          ></Video>
+          <ReactPlayer
+            url={`${process.env.PUBLIC_URL}/senegroove-media/${video}.mp4`}
+            playing={true}
+            controls
+          ></ReactPlayer>
         )}
       </div>
     </>

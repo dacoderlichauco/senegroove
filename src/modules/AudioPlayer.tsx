@@ -62,7 +62,7 @@ function AudioPlayer({ setStrike }: AudioPlayerProps) {
     };
   }, []);
 
-  return <div>Press a key to play the corresponding audio.</div>;
+  return <div></div>;
 }
 
 export default AudioPlayer;

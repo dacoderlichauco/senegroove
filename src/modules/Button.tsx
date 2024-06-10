@@ -15,15 +15,14 @@ type ButtonProps = {
 
 function Button({ imagesrc, video, setVideo, name }: ButtonProps) {
   return (
-    <div className="button-item">
+    <div
+      className="button-item"
+      onClick={() => {
+        setVideo(name);
+      }}
+    >
       {/* <img onClick={handleClick} src={imagesrc} alt={`Button ${order}`} /> */}
-      <a
-        onClick={() => {
-          setVideo(name);
-        }}
-      >
-        {" " + name + " "}
-      </a>
+      <a>{" " + name + " "}</a>
     </div>
   );
 }
