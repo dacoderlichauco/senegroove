@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import * as Tone from "tone";
 import { useSearchParams } from "react-router-dom";
 
 type AudioPlayerProps = {
@@ -6,52 +7,54 @@ type AudioPlayerProps = {
 };
 
 function AudioPlayer({ setStrike }: AudioPlayerProps) {
-  const tan = new Audio(`${process.env.PUBLIC_URL}/audio/tan-audio.mp3`);
-  const tet = new Audio(`${process.env.PUBLIC_URL}/audio/tet-audio.mp3`);
-  const chex = new Audio(`${process.env.PUBLIC_URL}/audio/chex-audio.mp3`);
-  const rwan = new Audio(`${process.env.PUBLIC_URL}/audio/rwan-audio.mp3`);
-  const tek = new Audio(`${process.env.PUBLIC_URL}/audio/tek-audio.mp3`);
-  const gin = new Audio(`${process.env.PUBLIC_URL}/audio/gin-audio.mp3`);
-  const pax = new Audio(`${process.env.PUBLIC_URL}/audio/pax-audio.mp3`);
-  const pin = new Audio(`${process.env.PUBLIC_URL}/audio/pin-audio.mp3`);
+  const tan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tan-audio.mp3`).toDestination();
+  const tet = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tet-audio.mp3`).toDestination();
+  const chex = new Tone.Player(`${process.env.PUBLIC_URL}/audio/chex-audio.mp3`).toDestination();
+  const rwan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/rwan-audio.mp3`).toDestination();
+  const tek = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tek-audio.mp3`).toDestination();
+  const gin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/gin-audio.mp3`).toDestination();
+  const pax = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pax-audio.mp3`).toDestination();
+  const pin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pin-audio.mp3`).toDestination();
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      let audio = new Audio("none");
+      let player = null;
+      // let audio = new Audio("none");
       let play = true;
       const key = event.key;
       if (key === "a") {
-        audio = tan;
+        player = tan;
         setStrike("tan");
       } else if (key === "s") {
-        audio = tet;
+        player = tet;
         setStrike("tet");
       } else if (key === "d") {
-        audio = chex;
+        player = chex;
         setStrike("chex");
       } else if (key === "f") {
-        audio = rwan;
+        player = rwan;
         setStrike("rwan");
       } else if (key === "j") {
-        audio = tek;
+        player = tek;
         setStrike("tek");
       } else if (key === "k") {
-        audio = gin;
+        player = gin;
         setStrike("gin");
       } else if (key === "l") {
-        audio = pax;
+        player = pax;
         setStrike("pax");
       } else if (key === ";") {
-        audio = pin;
+        player = pin;
         setStrike("pin");
       } else {
         play = false;
         setStrike("");
       }
 
-      if (play) {
-        audio.pause();
-        audio.play();
+      if (player) {
+        player.start();
+        // audio.pause();
+        // audio.play();
       }
     };
 
