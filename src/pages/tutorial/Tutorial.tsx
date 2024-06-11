@@ -3,7 +3,8 @@ import Button from "./Button";
 import Navbar from "../Navbar";
 import wave from "../.././media/sound-wave.png";
 import ReactPlayer from "react-player";
-import "./Tutorial.css";
+// Remove the import for the old CSS file
+// import "./Tutorial.css";
 
 type TutorialProps = {
   video: string;
@@ -17,83 +18,37 @@ function Tutorial({ video, setVideo }: TutorialProps) {
   return (
     <>
       <Navbar></Navbar>
-      <div className="button-container">
-        <div className="circle1">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"tan"}
-          ></Button>
+      <div className="flex flex-wrap justify-center items-center w-full space-x-4">
+        <div className="transform -translate-x-1/2 translate-y-full">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"tan"}></Button>
         </div>
-
-        <div className="circle2">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"tet"}
-          ></Button>
+        <div className="transform -translate-x-1/3 translate-y-6">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"tet"}></Button>
         </div>
-
-        <div className="circle3">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"chex"}
-          ></Button>
+        <div className="transform -translate-x-2.5">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"chex"}></Button>
         </div>
-
-        <div className="circle6">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"pin"}
-          ></Button>
+        <div className="transform translate-x-2.5">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"pin"}></Button>
         </div>
-
-        <div className="circle7">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"gin"}
-          ></Button>
+        <div className="transform translate-x-1/3 translate-y-6">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"gin"}></Button>
         </div>
-
-        <div className="circle8">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"pax"}
-          ></Button>
+        <div className="transform translate-x-1/2 translate-y-full">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"pax"}></Button>
         </div>
       </div>
 
-      <div className="button-container">
-        <div className="circle4">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"rwan"}
-          ></Button>
+      <div className="flex flex-wrap justify-center items-center w-full space-x-4">
+        <div className="transform -translate-x-1/2">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"rwan"}></Button>
         </div>
-
-        <div className="circle5">
-          <Button
-            imagesrc={wave}
-            video={video}
-            setVideo={setVideo}
-            name={"tek"}
-          ></Button>
+        <div className="transform translate-x-1/2">
+          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"tek"}></Button>
         </div>
       </div>
 
-      <div className="video-container">
+      <div className="flex justify-center items-center mt-5">
         {video !== "none" && (
           <ReactPlayer
             url={`${process.env.PUBLIC_URL}/senegroove-media/${video}.mp4`}

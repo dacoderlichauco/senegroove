@@ -3,21 +3,20 @@ import { Link } from "react-router-dom";
 import home from ".././media/house-icon.png";
 import tutorial from ".././media/tutorial.png";
 import drum from ".././media/drum.png";
-import "./Navbar.css";
 
 function Navbar() {
   return (
-    <div>
+    <div className="flex">
       <Link to="/">
-        <img src={home} className="icon"></img>
+        <img src={home} className="pt-2.5 pl-2.5 filter invert w-8"></img>
       </Link>
 
       <Link to="/tutorial">
-        <img src={tutorial} className="icon"></img>
+        <img src={tutorial} className="pt-2.5 pl-2.5 filter invert w-8"></img>
       </Link>
 
       <Link to="/familiarize">
-        <img src={drum} className="icon"></img>
+        <img src={drum} className="pt-2.5 pl-2.5 filter invert w-8"></img>
       </Link>
     </div>
   );
