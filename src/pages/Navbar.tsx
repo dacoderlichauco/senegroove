@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import home from ".././media/house-icon.png";
 import tutorial from ".././media/tutorial.png";
 import drum from ".././media/drum.png";
-import "./Navbar.css";
 
 function Navbar() {
   return (
