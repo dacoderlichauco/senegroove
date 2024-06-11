@@ -13,14 +13,14 @@ type AudioPlayerProps = {
 
 function AudioPlayer({ strike, setStrike }: AudioPlayerProps) {
 
-  const tan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tan-audio.mp3`).toDestination();
-  const tet = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tet-audio.mp3`).toDestination();
-  const chex = new Tone.Player(`${process.env.PUBLIC_URL}/audio/chex-audio.mp3`).toDestination();
-  const rwan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/rwan-audio.mp3`).toDestination();
-  const tek = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tek-audio.mp3`).toDestination();
-  const gin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/gin-audio.mp3`).toDestination();
-  const pax = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pax-audio.mp3`).toDestination();
-  const pin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pin-audio.mp3`).toDestination();
+  const tan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tan_fix.wav`).toDestination();
+  const tet = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tet_fix.wav`).toDestination();
+  const chex = new Tone.Player(`${process.env.PUBLIC_URL}/audio/chex_fix.wav`).toDestination();
+  const rwan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/rwan_fix.wav`).toDestination();
+  const tek = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tek_fix.wav`).toDestination();
+  const gin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/gin_fix.wav`).toDestination();
+  const pax = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pax_fix.wav`).toDestination();
+  const pin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pin_fix.wav`).toDestination();
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
