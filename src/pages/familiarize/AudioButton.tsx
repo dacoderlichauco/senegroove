@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./AudioButton.css";
 import * as Tone from "tone";
-import { async } from "q";
 
 type AudioButtonProps = {
   strike: string;
   setStrike: any;
-  // tones: any;
-  // setTone: any;
 };
 
 function AudioButton({ strike, setStrike }: AudioButtonProps) {
@@ -20,9 +16,7 @@ function AudioButton({ strike, setStrike }: AudioButtonProps) {
       top: event.clientY - rect.top - 50, // Center ripple within circle
       left: event.clientX - rect.left - 50, // Center ripple within circle
       id: nextRippleId,
-
     };
-
 
     console.log("Ripple created at: ", ripple); // Debugging log
     setRipples((prev) => [...prev, ripple]);
@@ -34,56 +28,25 @@ function AudioButton({ strike, setStrike }: AudioButtonProps) {
       player.toDestination();
       player.start();
     });
-    
+
     await Tone.start(); // Ensure Tone.js context is started
-    
-    // switch(strike) {
-    //   case "tan":
-    //     setTone(tones[0]);
-    //     break;
-    //   case "tet":
-    //     setTone(tones[1]);
-    //     break;
-    //   case "chex":
-    //     setTone(tones[2]);
-    //     break;
-    //   case "rwan":
-    //     setTone(tones[3]);
-    //     break;
-    //   case "tek":
-    //     setTone(tones[4]);
-    //     break;
-    //   case "gin":
-    //     setTone(tones[5]);
-    //     break;
-    //   case "pax":
-    //     setTone(tones[6]);
-    //     break;
-    //   case "pin":
-    //     setTone(tones[7]);
-    //     break; 
-    // }
   };
 
   useEffect(() => {
     console.log("Ripples: ", ripples); // Debugging log
   }, [ripples]);
 
-  // useEffect(()=> {
-  //   if (strike) {
-  //     const tone = new Tone.Player(`${process.env.PUBLIC_URL}/audio/${strike}-audio.mp3`).toDestination();
-  //     tone.start();
-  //   }
-  // }, []);
-
   return (
-    <div className="circle-container">
-      <div className="circle" onClick={handleClick}>
+    <div className="flex items-center justify-center h-screen">
+      <div
+        className="relative flex items-center justify-center h-24 w-24 rounded-full bg-gray-200 text-center text-2xl text-gray-600 border border-white cursor-pointer overflow-hidden"
+        onClick={handleClick}
+      >
         {strike}
         {ripples.map((ripple) => (
           <span
             key={ripple.id}
-            className="ripple"
+            className="absolute w-24 h-24 rounded-full bg-black bg-opacity-30 transform scale-0 animate-ripple"
             style={{
               top: ripple.top,
               left: ripple.left,
