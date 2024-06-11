@@ -2,6 +2,9 @@
   padding-top: 10px;
   padding-left: 10px;
   filter: invert();
-  width: 20px;
+  width: 30px;
 }
 
+.icon-container {
+  display: flex;
+}
