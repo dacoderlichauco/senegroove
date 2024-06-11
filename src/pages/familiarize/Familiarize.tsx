@@ -4,17 +4,14 @@ import AudioPlayer from "./AudioPlayer";
 import Navbar from "../Navbar";
 import * as Tone from "tone";
 
-
 function Familiarize() {
   const [strike, setStrike] = useState("");
-
 
   return (
     <>
       <Navbar></Navbar>
       <AudioPlayer strike={strike} setStrike={setStrike}></AudioPlayer>
-      <div className="button-container bg-blue-100">       
-
+      <div className="mt-5 flex justify-center items-center flex-wrap gap-12">
         {/* <Tutorial video={video} setVideo={setVideo}></Tutorial> */}
         <AudioButton strike={"tan"} setStrike={setStrike}></AudioButton>
         <AudioButton strike={"tet"} setStrike={setStrike}></AudioButton>

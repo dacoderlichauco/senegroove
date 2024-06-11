@@ -7,7 +7,7 @@ import "./Navbar.css";
 
 function Navbar() {
   return (
-    <div className="bg-blue-100">
+    <div>
       <Link to="/">
         <img src={home} className="icon"></img>
       </Link>
