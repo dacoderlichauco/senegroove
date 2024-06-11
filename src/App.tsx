@@ -1,15 +1,14 @@
 import React, { useState, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Button from "./modules/Button";
-import Video from "./modules/Video";
+import Button from "./pages/tutorial/Button";
 
 import wave from "./media/sound-wave.png";
-import Tutorial from "./pages/Tutorial";
-import AudioButton from "./modules/AudioButton";
+import Tutorial from "./pages/tutorial/Tutorial";
+import AudioButton from "./pages/familiarize/AudioButton";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Familiarize from "./pages/Familiarize";
+import Home from "./pages/home/Home";
+import Familiarize from "./pages/familiarize/Familiarize";
 
 function App() {
   // const [isPlaying, setIsPlaying] = useState(false);

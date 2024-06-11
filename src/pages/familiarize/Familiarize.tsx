@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AudioButton from "../modules/AudioButton";
-import AudioPlayer from "../modules/AudioPlayer";
-import Navbar from "../modules/Navbar";
+import AudioButton from "./AudioButton";
+import AudioPlayer from "./AudioPlayer";
+import Navbar from ".././Navbar";
 import * as Tone from "tone";
 
 

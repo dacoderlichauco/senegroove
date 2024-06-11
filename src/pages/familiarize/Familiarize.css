@@ -1,0 +1,10 @@
+.familiarize-container {
+    display: flex;
+    flex-direction: row; /* Ensures items are laid out horizontally */
+    align-items: center;
+    justify-content: center; /* Centers the items horizontally */
+    gap: 10px; /* Adds space between buttons */
+    background-color: lightblue; /* Add background color to see the container */
+    width: 100%; /* Ensure it takes the full width */
+  }
+  

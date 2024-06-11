@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import Button from "../modules/Button";
-import Video from "../modules/Video";
-import Navbar from "../modules/Navbar";
-import wave from ".././media/sound-wave.png";
+import Button from "./Button";
+import Navbar from ".././Navbar";
+import wave from "../.././media/sound-wave.png";
 import ReactPlayer from "react-player";
 import "./Tutorial.css";
 
