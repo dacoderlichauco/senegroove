@@ -41,16 +41,16 @@ function AudioButton({ strike, setStrike }: AudioButtonProps) {
   }, [ripples]);
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen relative">
       <div
-        className="relative flex items-center justify-center h-24 w-24 rounded-full bg-gray-200 text-center text-2xl text-gray-600 border border-white cursor-pointer overflow-hidden"
+        className="relative h-24 w-24 rounded-full bg-gray-300 text-center leading-[6rem] text-lg text-gray-700 border border-white cursor-pointer overflow-hidden"
         onClick={handleClick}
       >
         {strike}
         {ripples.map((ripple) => (
           <span
             key={ripple.id}
-            className="absolute w-24 h-24 rounded-full bg-black bg-opacity-30 transform scale-0 animate-ripple"
+            className="absolute w-24 h-24 rounded-full bg-black bg-opacity-30 animate-ripple"
             style={{
               top: ripple.top,
               left: ripple.left,
