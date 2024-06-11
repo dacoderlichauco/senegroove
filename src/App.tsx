@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import logo from "./logo.svg";
-import "./App.css";
+// import "./App.css";
 import Button from "./pages/tutorial/Button";
 
 import wave from "./media/sound-wave.png";
@@ -18,7 +18,8 @@ function App() {
   // const videoRef = useRef<HTMLVideoElement | null>(null);
 
   return (
-    <BrowserRouter>
+
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route
@@ -28,6 +29,7 @@ function App() {
         <Route path="familiarize" element={<Familiarize></Familiarize>}></Route>
       </Routes>
     </BrowserRouter>
+    
   );
 }
 

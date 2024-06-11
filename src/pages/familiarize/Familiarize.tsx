@@ -13,8 +13,8 @@ function Familiarize() {
     <>
       <Navbar></Navbar>
       <AudioPlayer strike={strike} setStrike={setStrike}></AudioPlayer>
-      <div className="button-container">       
-      
+      <div className="button-container bg-blue-100">       
+
         {/* <Tutorial video={video} setVideo={setVideo}></Tutorial> */}
         <AudioButton strike={"tan"} setStrike={setStrike}></AudioButton>
         <AudioButton strike={"tet"} setStrike={setStrike}></AudioButton>
