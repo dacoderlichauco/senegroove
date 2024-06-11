@@ -11,18 +11,20 @@ type AudioButtonProps = {
 };
 
 function AudioButton({ strike, setStrike }: AudioButtonProps) {
-  const [ripples, setRipples] = useState<Array<{ top: number; left: number; id: number }>>([]);
+  const [ripples, setRipples] = useState<
+    Array<{ top: number; left: number; id: number }>
+  >([]);
   const [nextRippleId, setNextRippleId] = useState(0);
 
-  const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleClick = async (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const ripple = {
       top: event.clientY - rect.top - 50, // Center ripple within circle
       left: event.clientX - rect.left - 50, // Center ripple within circle
       id: nextRippleId,
-
     };
-
 
     console.log("Ripple created at: ", ripple); // Debugging log
     setRipples((prev) => [...prev, ripple]);
@@ -34,47 +36,13 @@ function AudioButton({ strike, setStrike }: AudioButtonProps) {
       player.toDestination();
       player.start();
     });
-    
+
     await Tone.start(); // Ensure Tone.js context is started
-    
-    // switch(strike) {
-    //   case "tan":
-    //     setTone(tones[0]);
-    //     break;
-    //   case "tet":
-    //     setTone(tones[1]);
-    //     break;
-    //   case "chex":
-    //     setTone(tones[2]);
-    //     break;
-    //   case "rwan":
-    //     setTone(tones[3]);
-    //     break;
-    //   case "tek":
-    //     setTone(tones[4]);
-    //     break;
-    //   case "gin":
-    //     setTone(tones[5]);
-    //     break;
-    //   case "pax":
-    //     setTone(tones[6]);
-    //     break;
-    //   case "pin":
-    //     setTone(tones[7]);
-    //     break; 
-    // }
   };
 
   useEffect(() => {
     console.log("Ripples: ", ripples); // Debugging log
   }, [ripples]);
-
-  // useEffect(()=> {
-  //   if (strike) {
-  //     const tone = new Tone.Player(`${process.env.PUBLIC_URL}/audio/${strike}-audio.mp3`).toDestination();
-  //     tone.start();
-  //   }
-  // }, []);
 
   return (
     <div className="circle-container">
