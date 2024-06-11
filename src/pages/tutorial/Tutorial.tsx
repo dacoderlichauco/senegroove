@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "./Button";
-import Navbar from ".././Navbar";
+import Navbar from "../Navbar";
 import wave from "../.././media/sound-wave.png";
 import ReactPlayer from "react-player";
 import "./Tutorial.css";
