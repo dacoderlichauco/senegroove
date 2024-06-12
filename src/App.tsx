@@ -9,6 +9,7 @@ import AudioButton from "./pages/familiarize/AudioButton";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Familiarize from "./pages/familiarize/Familiarize";
+import Game from "./pages/game/Game";
 
 function App() {
   // const [isPlaying, setIsPlaying] = useState(false);
@@ -26,7 +27,8 @@ function App() {
           path="/tutorial"
           element={<Tutorial video={video} setVideo={setVideo} />}
         ></Route>
-        <Route path="familiarize" element={<Familiarize></Familiarize>}></Route>
+        <Route path="/familiarize" element={<Familiarize></Familiarize>}></Route>
+        <Route path="/game" element={<Game></Game>}></Route>
       </Routes>
     </BrowserRouter>
     

@@ -28,3 +28,8 @@ code {
       animation: ripple 0.6s linear;
     }
   }
+
+.font-helvetica {
+font-family: 'Helvetica', sans-serif;
+}
+  
