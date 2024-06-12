@@ -20,7 +20,7 @@ function AudioButton({ strike, keyTrigger }: AudioButtonProps) {
     setNextRippleId((prev) => prev + 1);
 
     // Create and play the sound using Tone.js
-    const url = `${process.env.PUBLIC_URL}/audio/${strike}-audio.mp3`;
+    const url = `${process.env.PUBLIC_URL}/audio/${strike}_fix.wav`;
     const player = new Tone.Player(url, () => {
       player.toDestination();
       player.start();
