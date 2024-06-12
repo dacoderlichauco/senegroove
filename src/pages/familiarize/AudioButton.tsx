@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as Tone from "tone";
 
 type AudioButtonProps = {
@@ -7,18 +7,22 @@ type AudioButtonProps = {
 };
 
 function AudioButton({ strike, setStrike }: AudioButtonProps) {
-  const [ripples, setRipples] = useState<Array<{ top: number; left: number; id: number }>>([]);
+  const [ripples, setRipples] = useState<
+    Array<{ top: number; left: number; id: number }>
+  >([]);
   const [nextRippleId, setNextRippleId] = useState(0);
 
-  const handleClick = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleClick = async (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const ripple = {
-      top: event.clientY - rect.top - 50, // Center ripple within circle
-      left: event.clientX - rect.left - 50, // Center ripple within circle
+      top: (rect.top + rect.height) / 2, // Center ripple within circle
+      left: (rect.left + rect.width) / 2, // Center ripple within circle
       id: nextRippleId,
     };
 
-    console.log("Ripple created at: ", ripple); // Debugging log
+    // console.log("Ripple created at: ", ripple); // Debugging log
     setRipples((prev) => [...prev, ripple]);
     setNextRippleId((prev) => prev + 1);
     setStrike(strike);
