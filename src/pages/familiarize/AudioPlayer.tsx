@@ -2,25 +2,40 @@ import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import * as Tone from "tone";
 
-
 type AudioPlayerProps = {
   strike: string;
   setStrike: any;
   // tone: any;
   // setTone: any;
   // tones: any;
+  // handleClick: any;
 };
 
 function AudioPlayer({ strike, setStrike }: AudioPlayerProps) {
-
-  const tan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tan-audio.mp3`).toDestination();
-  const tet = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tet-audio.mp3`).toDestination();
-  const chex = new Tone.Player(`${process.env.PUBLIC_URL}/audio/chex-audio.mp3`).toDestination();
-  const rwan = new Tone.Player(`${process.env.PUBLIC_URL}/audio/rwan-audio.mp3`).toDestination();
-  const tek = new Tone.Player(`${process.env.PUBLIC_URL}/audio/tek-audio.mp3`).toDestination();
-  const gin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/gin-audio.mp3`).toDestination();
-  const pax = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pax-audio.mp3`).toDestination();
-  const pin = new Tone.Player(`${process.env.PUBLIC_URL}/audio/pin-audio.mp3`).toDestination();
+  const tan = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/tan-audio.mp3`
+  ).toDestination();
+  const tet = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/tet-audio.mp3`
+  ).toDestination();
+  const chex = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/chex-audio.mp3`
+  ).toDestination();
+  const rwan = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/rwan-audio.mp3`
+  ).toDestination();
+  const tek = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/tek-audio.mp3`
+  ).toDestination();
+  const gin = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/gin-audio.mp3`
+  ).toDestination();
+  const pax = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/pax-audio.mp3`
+  ).toDestination();
+  const pin = new Tone.Player(
+    `${process.env.PUBLIC_URL}/audio/pin-audio.mp3`
+  ).toDestination();
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -69,7 +84,6 @@ function AudioPlayer({ strike, setStrike }: AudioPlayerProps) {
         // tone.start();
         player.start();
       }
-
     };
 
     window.addEventListener("keydown", handleKeyPress);

@@ -12,47 +12,105 @@ type TutorialProps = {
 };
 
 function Tutorial({ video, setVideo }: TutorialProps) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const reactPlayer = useRef<ReactPlayer>(null);
   // const [level, setLevel] = useState(1);
+
+  const handleReplay = () => {
+    if (reactPlayer.current) {
+      reactPlayer.current.seekTo(0);
+    }
+  };
 
   return (
     <>
       <Navbar></Navbar>
       <div className="flex flex-wrap justify-center items-center w-full space-x-4">
         <div className="transform -translate-x-1/2 translate-y-full">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"tan"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"tan"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
         <div className="transform -translate-x-1/3 translate-y-6">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"tet"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"tet"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
         <div className="transform -translate-x-2.5">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"chex"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"chex"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
         <div className="transform translate-x-2.5">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"pin"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"pin"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
         <div className="transform translate-x-1/3 translate-y-6">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"gin"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"gin"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
         <div className="transform translate-x-1/2 translate-y-full">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"pax"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"pax"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
       </div>
 
       <div className="flex flex-wrap justify-center items-center w-full space-x-4">
         <div className="transform -translate-x-1/2">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"rwan"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"rwan"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
         <div className="transform translate-x-1/2">
-          <Button imagesrc={wave} video={video} setVideo={setVideo} name={"tek"}></Button>
+          <Button
+            imagesrc={wave}
+            video={video}
+            setVideo={setVideo}
+            name={"tek"}
+            handleReplay={handleReplay}
+          ></Button>
         </div>
       </div>
 
       <div className="flex justify-center items-center mt-5">
         {video !== "none" && (
           <ReactPlayer
+            ref={reactPlayer}
             url={`${process.env.PUBLIC_URL}/senegroove-media/${video}.mp4`}
             playing={true}
+            onEnded={() => {
+              setVideo("none");
+            }}
             controls
           ></ReactPlayer>
         )}

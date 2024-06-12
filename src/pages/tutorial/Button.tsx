@@ -11,14 +11,22 @@ type ButtonProps = {
   video: string;
   setVideo: any;
   name: string;
+  handleReplay: any;
 };
 
-function Button({ imagesrc, video, setVideo, name }: ButtonProps) {
+function Button({
+  imagesrc,
+  video,
+  setVideo,
+  name,
+  handleReplay,
+}: ButtonProps) {
   return (
     <div
       className="button-item"
       onClick={() => {
         setVideo(name);
+        handleReplay();
       }}
     >
       {/* <img onClick={handleClick} src={imagesrc} alt={`Button ${order}`} /> */}
