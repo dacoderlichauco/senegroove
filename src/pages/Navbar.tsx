@@ -1,22 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import home from ".././media/house-icon.png";
-import tutorial from ".././media/tutorial.png";
-import drum from ".././media/drum.png";
+import home from ".././media/home-page.png";
+import tutorial from ".././media/tutorial-page.png";
+import drum from ".././media/drum-page.png";
+import game from ".././media/game-page.png";
+
 
 function Navbar() {
   return (
-    <div className="flex">
+    <div className="flex justify-around p-4">
       <Link to="/">
-        <img src={home} className="pt-2.5 pl-2.5 filter invert w-8"></img>
+        <img src={home} className="w-12 h-12 filter invert"></img>
       </Link>
 
       <Link to="/tutorial">
-        <img src={tutorial} className="pt-2.5 pl-2.5 filter invert w-8"></img>
+        <img src={tutorial} className="w-12 h-12 filter invert"></img>
       </Link>
 
       <Link to="/familiarize">
-        <img src={drum} className="pt-2.5 pl-2.5 filter invert w-8"></img>
+        <img src={drum} className="w-12 h-12 filter invert"></img>
+      </Link>
+
+      <Link to="/game">
+        <img src={game} className="w-12 h-12 filter invert"></img>
       </Link>
     </div>
   );

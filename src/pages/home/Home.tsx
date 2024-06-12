@@ -8,7 +8,7 @@ function Home() {
     <>
       <Navbar />
       <div className="flex items-center justify-center h-screen lightblue">
-        <h1 className="text-white text-8xl animate-fade-in">
+        <h1 className="text-white text-8xl font-helvetica animate-fade-in">
           Welcome to Senegroove!
         </h1>
       </div>
