@@ -21,6 +21,10 @@ function Tutorial({ video, setVideo }: TutorialProps) {
     }
   };
 
+  useEffect(() => {
+    setVideo("none");
+  }, []);
+
   return (
     <>
       <Navbar></Navbar>
