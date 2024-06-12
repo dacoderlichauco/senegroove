@@ -5,10 +5,6 @@ import * as Tone from "tone";
 type AudioPlayerProps = {
   strike: string;
   setStrike: any;
-  // tone: any;
-  // setTone: any;
-  // tones: any;
-  // handleClick: any;
 };
 
 function AudioPlayer({ strike, setStrike }: AudioPlayerProps) {
@@ -79,10 +75,7 @@ function AudioPlayer({ strike, setStrike }: AudioPlayerProps) {
         keyPressed = key;
         console.log(keyPressed);
 
-        // console.log(event.key);
-
         if (player) {
-          // tone.start();
           player.start();
         }
       }
