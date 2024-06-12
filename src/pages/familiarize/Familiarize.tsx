@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import AudioButton from "./AudioButton";
-import AudioPlayer from "./AudioPlayer";
 import Navbar from "../Navbar";
-import * as Tone from "tone";
 
 function Familiarize() {
-  const [strike, setStrike] = useState("");
+  const buttons = [
+    { strike: "tan", key: "a" },
+    { strike: "tet", key: "s" },
+    { strike: "chex", key: "d" },
+    { strike: "pin", key: "f" },
+    { strike: "gin", key: "g" },
+    { strike: "rwan", key: "h" },
+    { strike: "tek", key: "j" },
+    { strike: "pax", key: "k" },
+  ];
 
   return (
     <>
-      <Navbar></Navbar>
-      <AudioPlayer strike={strike} setStrike={setStrike}></AudioPlayer>
-      <div className="mt-5 flex justify-center items-center flex-wrap gap-12">
-        {/* <Tutorial video={video} setVideo={setVideo}></Tutorial> */}
-        <AudioButton strike={"tan"} setStrike={setStrike}></AudioButton>
-        <AudioButton strike={"tet"} setStrike={setStrike}></AudioButton>
-        <AudioButton strike={"chex"} setStrike={setStrike}></AudioButton>
-        <AudioButton strike={"rwan"} setStrike={setStrike}></AudioButton>
-        <AudioButton strike={"tek"} setStrike={setStrike}></AudioButton>
-        <AudioButton strike={"pin"} setStrike={setStrike}></AudioButton>
-        <AudioButton strike={"gin"} setStrike={setStrike}></AudioButton>
-        <AudioButton strike={"pax"} setStrike={setStrike}></AudioButton>
+      <Navbar />
+      <div className="flex flex-col items-center justify-end h-screen bg-lightblue p-4">
+        <div className="drum-buttons">
+          {buttons.map((btn) => (
+            <AudioButton key={btn.strike} strike={btn.strike} keyTrigger={btn.key} />
+          ))}
+        </div>
       </div>
     </>
   );

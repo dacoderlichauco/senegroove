@@ -1,23 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import * as Tone from "tone";
 
 type AudioButtonProps = {
   strike: string;
-  setStrike: any;
+  keyTrigger: string;
 };
 
-function AudioButton({ strike, setStrike }: AudioButtonProps) {
+function AudioButton({ strike, keyTrigger }: AudioButtonProps) {
   const [ripples, setRipples] = useState<Array<{ id: number }>>([]);
   const [nextRippleId, setNextRippleId] = useState(0);
 
-  const handleClick = async () => {
-    const ripple = {
-      id: nextRippleId,
-    };
-
+  const handlePlaySound = async () => {
+    const ripple = { id: nextRippleId };
     setRipples((prev) => [...prev, ripple]);
     setNextRippleId((prev) => prev + 1);
-    setStrike(strike);
 
     const url = `${process.env.PUBLIC_URL}/audio/${strike}-audio.mp3`;
     const player = new Tone.Player(url, () => {
@@ -25,18 +21,27 @@ function AudioButton({ strike, setStrike }: AudioButtonProps) {
       player.start();
     });
 
-    await Tone.start(); // Ensure Tone.js context is started
+    await Tone.start();
+  };
+
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (event.key.toLowerCase() === keyTrigger.toLowerCase()) {
+      handlePlaySound();
+    }
   };
 
   useEffect(() => {
-    console.log("Ripples: ", ripples); // Debugging log
-  }, [ripples]);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [nextRippleId]);
 
   return (
     <div className="flex items-center justify-center h-screen relative">
       <div
         className="relative h-24 w-24 rounded-full bg-gray-300 text-center leading-[6rem] text-lg text-gray-700 border border-white cursor-pointer overflow-hidden"
-        onClick={handleClick}
+        onClick={handlePlaySound}
       >
         {strike}
         {ripples.map((ripple) => (
