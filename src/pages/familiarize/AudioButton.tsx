@@ -7,22 +7,14 @@ type AudioButtonProps = {
 };
 
 function AudioButton({ strike, setStrike }: AudioButtonProps) {
-  const [ripples, setRipples] = useState<
-    Array<{ top: number; left: number; id: number }>
-  >([]);
+  const [ripples, setRipples] = useState<Array<{ id: number }>>([]);
   const [nextRippleId, setNextRippleId] = useState(0);
 
-  const handleClick = async (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    const rect = event.currentTarget.getBoundingClientRect();
+  const handleClick = async () => {
     const ripple = {
-      top: (rect.top + rect.height) / 2, // Center ripple within circle
-      left: (rect.left + rect.width) / 2, // Center ripple within circle
       id: nextRippleId,
     };
 
-    // console.log("Ripple created at: ", ripple); // Debugging log
     setRipples((prev) => [...prev, ripple]);
     setNextRippleId((prev) => prev + 1);
     setStrike(strike);
@@ -50,11 +42,7 @@ function AudioButton({ strike, setStrike }: AudioButtonProps) {
         {ripples.map((ripple) => (
           <span
             key={ripple.id}
-            className="absolute w-24 h-24 rounded-full bg-black bg-opacity-30 animate-ripple"
-            style={{
-              top: ripple.top,
-              left: ripple.left,
-            }}
+            className="absolute inset-0 m-auto w-24 h-24 rounded-full bg-black bg-opacity-30 animate-ripple"
           />
         ))}
       </div>
