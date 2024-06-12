@@ -17,7 +17,7 @@ function Familiarize() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center justify-end h-screen bg-lightblue p-4">
+      <div className="flex flex-col items-center h-screen bg-lightblue p-4">
         <div className="drum-buttons">
           {buttons.map((btn) => (
             <AudioButton key={btn.strike} strike={btn.strike} keyTrigger={btn.key} />
