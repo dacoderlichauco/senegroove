@@ -8,10 +8,10 @@ function Familiarize() {
     { strike: "tet", key: "s" },
     { strike: "chex", key: "d" },
     { strike: "pin", key: "f" },
-    { strike: "gin", key: "g" },
-    { strike: "rwan", key: "h" },
-    { strike: "tek", key: "j" },
-    { strike: "pax", key: "k" },
+    { strike: "gin", key: "j" },
+    { strike: "rwan", key: "k" },
+    { strike: "tek", key: "l" },
+    { strike: "pax", key: ";" },
   ];
 
   return (
@@ -20,7 +20,11 @@ function Familiarize() {
       <div className="flex flex-col items-center h-screen bg-lightblue p-4">
         <div className="drum-buttons">
           {buttons.map((btn) => (
-            <AudioButton key={btn.strike} strike={btn.strike} keyTrigger={btn.key} />
+            <AudioButton
+              key={btn.strike}
+              strike={btn.strike}
+              keyTrigger={btn.key}
+            />
           ))}
         </div>
       </div>
