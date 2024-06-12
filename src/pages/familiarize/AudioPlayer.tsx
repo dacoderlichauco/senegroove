@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import * as Tone from "tone";
 
@@ -12,6 +12,8 @@ type AudioPlayerProps = {
 };
 
 function AudioPlayer({ strike, setStrike }: AudioPlayerProps) {
+  let keyPressed = "";
+
   const tan = new Tone.Player(
     `${process.env.PUBLIC_URL}/audio/tan_fix.wav`
   ).toDestination();
@@ -38,58 +40,64 @@ function AudioPlayer({ strike, setStrike }: AudioPlayerProps) {
   ).toDestination();
 
   useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      let player = null;
-      let play = true;
+    const handleKeyDown = (event: KeyboardEvent) => {
       const key = event.key;
-      if (key === "a") {
-        player = tan;
-        // setTone(tones[0]);
-        setStrike("tan");
-      } else if (key === "s") {
-        player = tet;
-        // setTone(tones[1]);
-        setStrike("tet");
-      } else if (key === "d") {
-        player = chex;
-        // setTone(tones[2]);
-        setStrike("chex");
-      } else if (key === "f") {
-        player = rwan;
-        // setTone(tones[3]);
-        setStrike("rwan");
-      } else if (key === "j") {
-        player = tek;
-        // setTone(tones[4]);
-        setStrike("tek");
-      } else if (key === "k") {
-        player = gin;
-        // setTone(tones[5]);
-        setStrike("gin");
-      } else if (key === "l") {
-        player = pax;
-        // setTone(tones[6]);
-        setStrike("pax");
-      } else if (key === ";") {
-        player = pin;
-        // setTone(tones[7]);
-        setStrike("pin");
-      } else {
-        play = false;
-        setStrike("");
-      }
 
-      console.log(event.key);
-      if (player) {
-        // tone.start();
-        player.start();
+      if (key !== keyPressed) {
+        let player = null;
+        let play = true;
+
+        if (key === "a") {
+          player = tan;
+          setStrike("tan");
+        } else if (key === "s") {
+          player = tet;
+          setStrike("tet");
+        } else if (key === "d") {
+          player = chex;
+          setStrike("chex");
+        } else if (key === "f") {
+          player = rwan;
+          setStrike("rwan");
+        } else if (key === "j") {
+          player = tek;
+          setStrike("tek");
+        } else if (key === "k") {
+          player = gin;
+          setStrike("gin");
+        } else if (key === "l") {
+          player = pax;
+          setStrike("pax");
+        } else if (key === ";") {
+          player = pin;
+          setStrike("pin");
+        } else {
+          play = false;
+          setStrike("");
+        }
+
+        keyPressed = key;
+        console.log(keyPressed);
+
+        // console.log(event.key);
+
+        if (player) {
+          // tone.start();
+          player.start();
+        }
       }
     };
 
-    window.addEventListener("keydown", handleKeyPress);
+    const handleKeyUp = (event: KeyboardEvent) => {
+      keyPressed = "";
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 
