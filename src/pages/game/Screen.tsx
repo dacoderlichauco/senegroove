@@ -36,6 +36,11 @@ const CanvasWithVerticalLines: React.FC = () => {
               ctx.stroke();
             }
           }
+
+          ctx.beginPath();
+          ctx.moveTo(0, (4 * canvas.height) / 5);
+          ctx.lineTo(canvas.width, (4 * canvas.height) / 5);
+          ctx.stroke();
         }
       };
 
