@@ -54,7 +54,7 @@ const CanvasWithVerticalLines: React.FC = () => {
     <div style={{ position: "relative", height: "100vh" }}>
       <canvas
         ref={canvasRef}
-        style={{ position: "absolute", top: `${navbarHeight}px`, left: 0 }}
+        style={{ position: "absolute", top: 0, left: 0 }}
       />
     </div>
   );

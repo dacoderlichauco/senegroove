@@ -49,6 +49,7 @@ function Game() {
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-black text-white text-center">
           sound bar : )
         </div>
+        <Screen></Screen>
       </div>
     </div>
   );
