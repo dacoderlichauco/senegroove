@@ -5,7 +5,6 @@ import tutorial from ".././media/tutorial-page.png";
 import drum from ".././media/drum-page.png";
 import game from ".././media/game-page.png";
 
-
 function Navbar() {
   return (
     <div className="flex justify-around p-4">
