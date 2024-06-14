@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 const CanvasWithVerticalLines: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const navbarHeight = 50; // Adjust this value to match your navbar height
+  const navbarHeight = 80; // Adjust this value to match your navbar height
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,7 +19,7 @@ const CanvasWithVerticalLines: React.FC = () => {
           const sectionWidth = canvas.width / sections;
 
           // Set background color to black
-          ctx.fillStyle = "black";
+          ctx.fillStyle = "lightblue";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
 
           // Set line style
@@ -56,11 +56,8 @@ const CanvasWithVerticalLines: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ position: "relative", height: "100vh" }}>
-      <canvas
-        ref={canvasRef}
-        style={{ position: "absolute", top: 0, left: 0 }}
-      />
+    <div className="relative h-full z-0">
+      <canvas ref={canvasRef} className="absolute top-0 left-0" />
     </div>
   );
 };
