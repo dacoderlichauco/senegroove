@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 
-// type JewelProps = {
-//   time: number;
-//   strike: string;
-//   lane: boolean;
-// };
+type JewelProps = {
+  //   time: number;
+  //   strike: string;
+  //   lane: boolean;
+  score: number;
+  setScore: any;
+};
 
-function Jewel() {
+function Jewel({ score, setScore }: JewelProps) {
   const [circleTop, setCircleTop] = useState(0); // Track vertical position of the circle
   const [hit, setHit] = useState(false);
-  const [score, setScore] = useState(0);
+  const [show, setShow] = useState(true);
+  //   const [score, setScore] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCircleTop((prevTop) => {
-        if (prevTop < 70) {
+        if (prevTop < 90) {
           // Stop moving when hitting the bar
           return prevTop + 5; // Move down by 5%
+        } else if (prevTop >= 85) {
+          setShow(false);
         }
         return prevTop;
       });
-    }, 75); // Update position every 100ms
+    }, 75); // Updates every n ms
 
     return () => clearInterval(interval);
   }, []);
@@ -30,10 +35,14 @@ function Jewel() {
       if (event.code === "Space") {
         console.log("Space key pressed");
         setHit(true);
-        if (circleTop >= 70 && circleTop <= 90) {
+        setShow(false);
+        if (circleTop >= 75 && circleTop <= 80) {
           // Expanded range
           console.log("Circle is within the now bar range");
-          setScore((prevScore) => prevScore + 1);
+          if (show) {
+            setScore(score + 1);
+          }
+
           setCircleTop(0); // Reset circle to top
         }
       }
@@ -48,7 +57,7 @@ function Jewel() {
 
   return (
     <div>
-      {!hit ? (
+      {!hit && show ? (
         <div
           className="absolute w-20 h-20 bg-white rounded-full z-10"
           style={{
