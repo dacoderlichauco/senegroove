@@ -110,7 +110,7 @@ function Tutorial({ video, setVideo }: TutorialProps) {
         {video !== "none" && (
           <ReactPlayer
             ref={reactPlayer}
-            url={`${process.env.PUBLIC_URL}/senegroove-media/${video}.mp4`}
+            url={`${process.env.PUBLIC_URL}/videos/${video}.mp4`}
             playing={true}
             onEnded={() => {
               setVideo("none");
