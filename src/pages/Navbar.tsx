@@ -7,7 +7,7 @@ import game from ".././media/game-page.png";
 
 function Navbar() {
   return (
-    <div className="flex justify-around p-4">
+    <div className="flex justify-around p-4 border-b-2 border-white">
       <Link to="/">
         <img src={home} className="w-12 h-12 filter invert"></img>
       </Link>

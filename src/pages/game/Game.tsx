@@ -3,6 +3,9 @@ import Navbar from "../Navbar";
 import Screen from "./Screen";
 import Jewel from "./Jewel";
 import Score from "./Score";
+import Lamine from "./Lamine";
+import ReactPlayer from "react-player";
+
 import data from "../../audio_handling/smaller.json";
 
 function Game() {
@@ -47,7 +50,7 @@ function Game() {
       <div className="flex w-screen justify-center items-center">
         <Score score={score} hit={hit}></Score>
       </div>
-
+      <Lamine></Lamine>
       {jewels}
       {/* <Jewel score={score} setScore={setScore}></Jewel> */}
     </div>
