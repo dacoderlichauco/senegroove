@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 
 type JewelProps = {
-  //   time: number;
+  time: string;
   //   strike: string;
   //   lane: boolean;
   score: number;
   setScore: any;
+  setLast: any;
 };
 
-function Jewel({ score, setScore }: JewelProps) {
+function Jewel({ time, score, setScore, setLast }: JewelProps) {
   const [circleTop, setCircleTop] = useState(0); // Track vertical position of the circle
   const [hit, setHit] = useState(false);
   const [show, setShow] = useState(true);
@@ -32,26 +33,32 @@ function Jewel({ score, setScore }: JewelProps) {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.code === "Space") {
-        console.log("Space key pressed");
-        setHit(true);
-        setShow(false);
-        if (circleTop >= 75 && circleTop <= 80) {
-          // Expanded range
-          console.log("Circle is within the now bar range");
-          if (show) {
-            setScore(score + 1);
-          }
+      if (circleTop >= 70) {
+        if (event.code === "Space") {
+          console.log("Space key pressed");
+          setLast("Early");
+          setHit(true);
+          setShow(false);
+          if (circleTop >= 75 && circleTop <= 80) {
+            // Expanded range
+            console.log("Circle is within the now bar range");
+            if (show) {
+              setLast("HITTTTTT");
+              setScore((prevScore: number) => {
+                return prevScore + 0.5;
+              });
+            }
 
-          setCircleTop(0); // Reset circle to top
+            // setCircleTop(0); // Reset circle to top
+          }
         }
       }
     };
 
-    window.addEventListener("keydown", handleKeyPress);
+    window.addEventListener("keypress", handleKeyPress);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener("keypress", handleKeyPress);
     };
   }, [circleTop]);
 
@@ -65,7 +72,9 @@ function Jewel({ score, setScore }: JewelProps) {
             left: "50%",
             transform: "translateX(-50%)",
           }}
-        ></div>
+        >
+          {time}
+        </div>
       ) : (
         <></>
       )}

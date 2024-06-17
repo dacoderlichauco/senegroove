@@ -3,16 +3,53 @@ import Navbar from "../Navbar";
 import Screen from "./Screen";
 import Jewel from "./Jewel";
 import Score from "./Score";
+import data from "../../audio_handling/smaller.json";
 
 function Game() {
   const [score, setScore] = useState(0);
+  const [jewels, setJewels] = useState<JSX.Element[]>([]);
+  const [hit, setHit] = useState("");
+
+  interface annotation {
+    TIME: string;
+    LABEL: string;
+  }
+
+  useEffect(() => {
+    // Parse and sort the data points by time
+    const sortedDataPoints = data.sort(
+      (a: annotation, b: annotation) => parseFloat(a.TIME) - parseFloat(b.TIME)
+    );
+
+    sortedDataPoints.forEach((point: annotation) => {
+      const timeInMs = parseFloat(point.TIME) * 1000;
+
+      setTimeout(() => {
+        setJewels((prevJewels) => [
+          ...prevJewels,
+          <Jewel
+            time={point.TIME}
+            score={score}
+            setScore={setScore}
+            setLast={setHit}
+          />,
+        ]);
+      }, timeInMs);
+    });
+  }, []);
+
+  // const annotations: annotation[] = data;
 
   return (
     <div>
       <Navbar />
       <Screen></Screen>
-      <Score score={score}></Score>
-      <Jewel score={score} setScore={setScore}></Jewel>
+      <div className="flex w-screen justify-center items-center">
+        <Score score={score} hit={hit}></Score>
+      </div>
+
+      {jewels}
+      {/* <Jewel score={score} setScore={setScore}></Jewel> */}
     </div>
   );
 }

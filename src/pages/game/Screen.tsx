@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const CanvasWithVerticalLines: React.FC = () => {
+function Screen() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const navbarHeight = 80; // Adjust this value to match your navbar height
 
@@ -28,7 +28,7 @@ const CanvasWithVerticalLines: React.FC = () => {
 
           // Draw vertical lines
           for (let i = 1; i < sections; i++) {
-            if (i == 5 || i == 6 || i == 10 || i == 11) {
+            if (i == 3 || i == 4 || i == 12 || i == 13) {
               const x = i * sectionWidth;
               ctx.beginPath();
               ctx.moveTo(x, 0);
@@ -60,6 +60,6 @@ const CanvasWithVerticalLines: React.FC = () => {
       <canvas ref={canvasRef} className="absolute top-0 left-0" />
     </div>
   );
-};
+}
 
-export default CanvasWithVerticalLines;
+export default Screen;
