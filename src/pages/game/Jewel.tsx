@@ -34,7 +34,7 @@ function Jewel({ time, score, setScore, setLast }: JewelProps) {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (circleTop >= 70) {
-        if (event.code === "Space") {
+        if (event.code === "A") {
           console.log("Space key pressed");
           setLast("Early");
           setHit(true);
@@ -66,7 +66,7 @@ function Jewel({ time, score, setScore, setLast }: JewelProps) {
     <div>
       {!hit && show ? (
         <div
-          className="absolute w-20 h-20 bg-white rounded-full z-10"
+          className="absolute w-20 h-20 bg-white rounded-full z-20"
           style={{
             top: `${circleTop}%`,
             left: "50%",
