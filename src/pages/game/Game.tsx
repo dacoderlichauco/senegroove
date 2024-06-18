@@ -24,9 +24,11 @@ function Game() {
   useEffect(() => {
     const interval = setInterval(() => {
       // return () => clearInterval(interval);
-      if (reactPlayer.current)
-        console.log(reactPlayer.current.getCurrentTime());
-    }, 1000);
+      if (reactPlayer.current) {
+        console.log("current time" + reactPlayer.current.getCurrentTime());
+        setTime(reactPlayer.current.getCurrentTime());
+      }
+    }, 100);
   }, []);
 
   const handlePlay = () => {
@@ -35,29 +37,30 @@ function Game() {
 
   const handlePause = () => {};
 
-  useEffect(() => {
-    // Parse and sort the data points by time
-    const sortedDataPoints = data.sort(
-      (a: annotation, b: annotation) => parseFloat(a.TIME) - parseFloat(b.TIME)
-    );
+  // useEffect(() => {
+  //   // Parse and sort the data points by time
+  //   const sortedDataPoints = data.sort(
+  //     (a: annotation, b: annotation) => parseFloat(a.TIME) - parseFloat(b.TIME)
+  //   );
 
-    sortedDataPoints.forEach((point: annotation) => {
-      const timeInMs = parseFloat(point.TIME) * 1000;
+  //   sortedDataPoints.forEach((point: annotation) => {
+  //     const timeInMs = parseFloat(point.TIME) * 1000;
 
-      setTimeout(() => {
-        setJewels((prevJewels) => [
-          ...prevJewels,
-          <Jewel
-            time={time}
-            cue={point.TIME}
-            score={score}
-            setScore={setScore}
-            setLast={setHit}
-          />,
-        ]);
-      }, timeInMs);
-    });
-  }, []);
+  //     setTimeout(() => {
+  //       setJewels((prevJewels) => [
+  //         ...prevJewels,
+  //         <Jewel
+  //           // time={time}
+  //           player={reactPlayer}
+  //           cue={point.TIME}
+  //           score={score}
+  //           setScore={setScore}
+  //           setLast={setHit}
+  //         />,
+  //       ]);
+  //     }, timeInMs);
+  //   });
+  // }, []);
 
   return (
     <div>

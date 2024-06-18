@@ -50,9 +50,9 @@ function Lamine({
         controls
         // onReady={() => reactPlayer.current?.seekTo(0)}
         // onPlay={handlePlay}
-        onProgress={(progress) => {
-          setTime(progress.played);
-        }}
+        // onProgress={(progress) => {
+        //   setTime(progress.played);
+        // }}
         onPause={handlePause}
         onPlay={handlePlay}
       ></ReactPlayer>
