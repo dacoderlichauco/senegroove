@@ -4,12 +4,22 @@ type JewelProps = {
   time: string;
   //   strike: string;
   //   lane: boolean;
-  score: number;
+  // score: number;
   setScore: any;
+  setMisses: any;
+  setEarlies: any;
   setLast: any;
+  current: number;
 };
 
-function Jewel({ time, score, setScore, setLast }: JewelProps) {
+function Jewel({
+  time,
+  setScore,
+  setMisses,
+  setEarlies,
+  setLast,
+  current,
+}: JewelProps) {
   const [circleTop, setCircleTop] = useState(0); // Track vertical position of the circle
   const [hit, setHit] = useState(false);
   const [show, setShow] = useState(true);
@@ -18,13 +28,13 @@ function Jewel({ time, score, setScore, setLast }: JewelProps) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCircleTop((prevTop) => {
-        if (prevTop < 90) {
+        if (prevTop < 85) {
           // Stop moving when hitting the bar
           return prevTop + 5; // Move down by 5%
-        } else if (prevTop >= 85) {
+        } else {
           setShow(false);
+          return prevTop;
         }
-        return prevTop;
       });
     }, 75); // Updates every n ms
 
@@ -37,6 +47,9 @@ function Jewel({ time, score, setScore, setLast }: JewelProps) {
         if (event.code === "Space") {
           console.log("Space key pressed");
           setLast("Early");
+          setEarlies((prev: number) => {
+            return prev + 1;
+          });
           setHit(true);
           setShow(false);
           if (circleTop >= 75 && circleTop <= 80) {

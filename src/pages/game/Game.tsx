@@ -7,8 +7,11 @@ import data from "../../audio_handling/smaller.json";
 
 function Game() {
   const [score, setScore] = useState(0);
+  const [misses, setMisses] = useState(0);
+  const [earlies, setEarlies] = useState(0);
   const [jewels, setJewels] = useState<JSX.Element[]>([]);
-  const [hit, setHit] = useState("");
+  const [last, setLast] = useState("");
+  const [current, setCurrent] = useState(0);
 
   interface annotation {
     TIME: string;
@@ -21,6 +24,8 @@ function Game() {
       (a: annotation, b: annotation) => parseFloat(a.TIME) - parseFloat(b.TIME)
     );
 
+    let id = 0;
+
     sortedDataPoints.forEach((point: annotation) => {
       const timeInMs = parseFloat(point.TIME) * 1000;
 
@@ -28,13 +33,18 @@ function Game() {
         setJewels((prevJewels) => [
           ...prevJewels,
           <Jewel
+            key={id}
             time={point.TIME}
-            score={score}
             setScore={setScore}
-            setLast={setHit}
+            setMisses={setMisses}
+            setEarlies={setEarlies}
+            setLast={setLast}
+            current={current}
           />,
         ]);
       }, timeInMs);
+
+      id += 1;
     });
   }, []);
 
@@ -45,7 +55,12 @@ function Game() {
       <Navbar />
       <Screen></Screen>
       <div className="flex w-screen justify-center items-center">
-        <Score score={score} hit={hit}></Score>
+        <Score
+          score={score}
+          misses={misses}
+          earlies={earlies}
+          last={last}
+        ></Score>
       </div>
 
       {jewels}
