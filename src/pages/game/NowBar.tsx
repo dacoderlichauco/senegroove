@@ -10,7 +10,7 @@ type NowBarProps = {
 
 const NowBar: React.FC<NowBarProps> = ({ videoRef, gems, updateScore }) => {
   const [score, setScore] = useState<Score>({ hits: 0, misses: 0, earlyHits: 0 });
-  const slopWindow = 0.1; // Adjustable slop window parameter
+  const slopWindow = 0.5; // Adjustable slop window parameter
 
   const handleKeyPress = (event: KeyboardEvent) => {
     if (videoRef.current) {
