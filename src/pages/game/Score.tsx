@@ -1,16 +1,18 @@
-import React from "react";
+import React from 'react';
+import { Score as ScoreType } from '../../types';
 
 type ScoreProps = {
-  score: number;
-  hit: string;
+  score: ScoreType;
 };
 
-function Score({ score, hit }: ScoreProps) {
+const Score: React.FC<ScoreProps> = ({ score }) => {
   return (
-    <div className="absolute text-white text-3xl z-20 p-10 flex justify-center items-center">
-      Score: {score} Last: {hit}
+    <div className="absolute top-0 left-0 p-4 bg-gray-700 text-white">
+      <p>Hits: {score.hits}</p>
+      <p>Misses: {score.misses}</p>
+      <p>Early Hits: {score.earlyHits}</p>
     </div>
   );
-}
+};
 
 export default Score;

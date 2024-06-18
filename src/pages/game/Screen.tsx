@@ -1,65 +1,49 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from 'react';
+import Gem from './Gem';
+import NowBar from './NowBar';
+import Score from './Score';
+import { Gem as GemType, Score as ScoreType } from '../../types';
+import { loadGems, getCurrentTime } from '../../utils';
 
-function Screen() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const navbarHeight = 80; // Adjust this value to match your navbar height
+const Screen: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [gems, setGems] = useState<GemType[]>([]);
+  const [score, setScore] = useState<ScoreType>({ hits: 0, misses: 0, earlyHits: 0 });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const handleResize = () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight - navbarHeight;
-        canvas.width = width;
-        canvas.height = height;
+    loadGems().then(setGems);
+  }, []);
 
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          const sections = 16;
-          const sectionWidth = canvas.width / sections;
+  useEffect(() => {
+    const updateGemPositions = () => {
+      if (videoRef.current) {
+        const currentTime = getCurrentTime(videoRef.current);
+        setGems(prevGems =>
+          prevGems.map(gem => ({
+            ...gem,
+            position: { ...gem.position, y: currentTime - gem.time },
+          }))
+        );
+      }
+    };
 
-          // Set background color to black
-          ctx.fillStyle = "lightblue";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-          // Set line style
-          ctx.strokeStyle = "white";
-          ctx.lineWidth = 2;
-
-          // Draw vertical lines
-          for (let i = 1; i < sections; i++) {
-            if (i == 3 || i == 4 || i == 12 || i == 13) {
-              const x = i * sectionWidth;
-              ctx.beginPath();
-              ctx.moveTo(x, 0);
-              ctx.lineTo(x, canvas.height);
-              ctx.stroke();
-            }
-          }
-
-          ctx.beginPath();
-          ctx.moveTo(0, (4 * canvas.height) / 5);
-          ctx.lineTo(canvas.width, (4 * canvas.height) / 5);
-          ctx.stroke();
-        }
-      };
-
-      // Initial draw
-      handleResize();
-
-      // Resize event listener
-      window.addEventListener("resize", handleResize);
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
+    const interval = setInterval(updateGemPositions, 100);
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative h-full z-0">
-      <canvas ref={canvasRef} className="absolute top-0 left-0" />
+    <div className="relative w-full h-screen bg-black">
+      <video ref={videoRef} className="w-full h-3/4" controls>
+        <source src="your-video-url.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <NowBar videoRef={videoRef} gems={gems} updateScore={setScore} />
+      <Score score={score} />
+      {gems.map((gem, index) => (
+        <Gem key={index} gem={gem} />
+      ))}
     </div>
   );
-}
+};
 
 export default Screen;
