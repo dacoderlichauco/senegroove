@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ReactPlayer from 'react-player';
 import Gem from './Gem';
 import NowBar from './NowBar';
 import Score from './Score';
@@ -6,7 +7,7 @@ import { Gem as GemType, Score as ScoreType } from '../../types';
 import { loadGems, getCurrentTime } from '../../utils';
 
 const Screen: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<ReactPlayer>(null);
   const [gems, setGems] = useState<GemType[]>([]);
   const [score, setScore] = useState<ScoreType>({ hits: 0, misses: 0, earlyHits: 0 });
 
@@ -17,7 +18,7 @@ const Screen: React.FC = () => {
   useEffect(() => {
     const updateGemPositions = () => {
       if (videoRef.current) {
-        const currentTime = getCurrentTime(videoRef.current);
+        const currentTime = videoRef.current.getCurrentTime();
         setGems(prevGems =>
           prevGems.map(gem => ({
             ...gem,
@@ -33,10 +34,14 @@ const Screen: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen bg-black">
-      <video ref={videoRef} className="w-full h-3/4" controls>
-        <source src="/senegroove-media/easy_pattern.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      <ReactPlayer
+        ref={videoRef}
+        url="/senegroove-media/easy_pattern.mp4"
+        playing
+        controls
+        width="100%"
+        height="75%"
+      />
       <NowBar videoRef={videoRef} gems={gems} updateScore={setScore} />
       <Score score={score} />
       {gems.map((gem, index) => (

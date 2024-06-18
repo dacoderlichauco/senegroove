@@ -5,6 +5,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        lightblue: {
+          500: '#add8e6',
+        },
+      },
       keyframes: {
         'fade-in': {
           '0%': { opacity: '0' },

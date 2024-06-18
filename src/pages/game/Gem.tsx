@@ -6,12 +6,16 @@ type GemProps = {
 };
 
 const Gem: React.FC<GemProps> = ({ gem }) => {
+  const gemColor = gem.label === 'f' ? 'bg-lightblue-500' : 'bg-white';
+  const gemLeftPosition = gem.label === 'f' ? 'left-1/4' : 'left-3/4';
+
   return (
     <div
-      className={`absolute bg-red-500 rounded-full w-8 h-8 transition-transform`}
+      className={`absolute rounded-full w-8 h-8 transition-transform ${gemColor}`}
       style={{
-        transform: `translate(${gem.position.x * 50}%, ${gem.position.y * 100}%)`,
+        transform: `translateY(${gem.position.y * 100}%)`,
       }}
+      className={gemLeftPosition}
     ></div>
   );
 };
