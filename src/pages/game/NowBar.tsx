@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Score } from '../../types';
+import { Score, Gem } from '../../types';
 
 type NowBarProps = {
   videoRef: React.RefObject<HTMLVideoElement>;

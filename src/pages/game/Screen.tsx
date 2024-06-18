@@ -34,7 +34,7 @@ const Screen: React.FC = () => {
   return (
     <div className="relative w-full h-screen bg-black">
       <video ref={videoRef} className="w-full h-3/4" controls>
-        <source src="your-video-url.mp4" type="video/mp4" />
+        <source src="/senegroove-media/easy_pattern.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <NowBar videoRef={videoRef} gems={gems} updateScore={setScore} />
