@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactPlayer from 'react-player'; // Import ReactPlayer here
 import { Score, Gem } from '../../types';
 
 type NowBarProps = {

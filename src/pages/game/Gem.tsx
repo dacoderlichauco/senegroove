@@ -11,11 +11,10 @@ const Gem: React.FC<GemProps> = ({ gem }) => {
 
   return (
     <div
-      className={`absolute rounded-full w-8 h-8 transition-transform ${gemColor}`}
+      className={`absolute rounded-full w-8 h-8 transition-transform ${gemColor} ${gemLeftPosition}`}
       style={{
         transform: `translateY(${gem.position.y * 100}%)`,
       }}
-      className={gemLeftPosition}
     ></div>
   );
 };
