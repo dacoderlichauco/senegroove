@@ -4,12 +4,13 @@ import Gem from './Gem';
 import NowBar from './NowBar';
 import Score from './Score';
 import { Gem as GemType, Score as ScoreType } from '../../types';
-import { loadGems, getCurrentTime } from '../../utils';
+import { loadGems } from '../../utils';
 
 const Screen: React.FC = () => {
   const videoRef = useRef<ReactPlayer>(null);
   const [gems, setGems] = useState<GemType[]>([]);
   const [score, setScore] = useState<ScoreType>({ hits: 0, misses: 0, earlyHits: 0 });
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     loadGems().then(setGems);
@@ -19,11 +20,20 @@ const Screen: React.FC = () => {
     const updateGemPositions = () => {
       if (videoRef.current) {
         const currentTime = videoRef.current.getCurrentTime();
+        const screenHeight = window.innerHeight;
+        const nowBarHeight = 50; // Height of the now bar in pixels
+        const maxFallDistance = screenHeight - nowBarHeight;
+
         setGems(prevGems =>
-          prevGems.map(gem => ({
-            ...gem,
-            position: { ...gem.position, y: currentTime - gem.time },
-          }))
+          prevGems.map(gem => {
+            const timeUntilNowBar = gem.time - currentTime;
+            const position = Math.max(0, (1 - (timeUntilNowBar / gem.time)) * maxFallDistance);
+
+            return {
+              ...gem,
+              position: { ...gem.position, y: position / screenHeight },
+            };
+          })
         );
       }
     };
@@ -32,21 +42,34 @@ const Screen: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleError = (e: any) => {
+    console.error('Error playing video:', e);
+  };
+
   return (
     <div className="relative w-full h-screen bg-black">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        {gems.map((gem, index) => (
+          <Gem key={index} gem={gem} />
+        ))}
+      </div>
       <ReactPlayer
         ref={videoRef}
-        url="/senegroove-media/easy_pattern.mp4"
-        playing
+        url="easy_pattern.mp4"
+        playing={playing}
         controls
         width="100%"
         height="75%"
+        onError={handleError}
       />
       <NowBar videoRef={videoRef} gems={gems} updateScore={setScore} />
       <Score score={score} />
-      {gems.map((gem, index) => (
-        <Gem key={index} gem={gem} />
-      ))}
+      <button
+        className="absolute bottom-20 right-10 p-4 bg-blue-500 text-white rounded"
+        onClick={() => setPlaying(prev => !prev)}
+      >
+        {playing ? 'Pause' : 'Play'}
+      </button>
     </div>
   );
 };

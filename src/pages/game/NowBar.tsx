@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player'; // Import ReactPlayer here
+import ReactPlayer from 'react-player';
 import { Score, Gem } from '../../types';
 
 type NowBarProps = {
@@ -19,7 +19,9 @@ const NowBar: React.FC<NowBarProps> = ({ videoRef, gems, updateScore }) => {
 
       if (currentGem) {
         if ((currentGem.label === 'f' && event.key === 'f') || (currentGem.label === 'j' && event.key === 'j')) {
-          setScore(prevScore => ({ ...prevScore, hits: prevScore.hits + 1 }));
+          if ((event.key === 'f' && currentGem.label === 'f') || (event.key === 'j' && currentGem.label === 'j')) {
+            setScore(prevScore => ({ ...prevScore, hits: prevScore.hits + 1 }));
+          }
         }
       } else {
         setScore(prevScore => ({ ...prevScore, earlyHits: prevScore.earlyHits + 1 }));
@@ -35,9 +37,9 @@ const NowBar: React.FC<NowBarProps> = ({ videoRef, gems, updateScore }) => {
   }, [score]);
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 flex justify-between">
-      <div className="w-1/2 h-10 bg-lightblue-500"></div>
-      <div className="w-1/2 h-10 bg-white"></div>
+    <div className="absolute bottom-0 left-0 right-0 flex justify-between h-10">
+      <div className="w-1/2 h-full bg-pink-500"></div>
+      <div className="w-1/2 h-full bg-purple-500"></div>
     </div>
   );
 };
