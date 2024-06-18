@@ -9,6 +9,9 @@ function Game() {
   const [score, setScore] = useState(0);
   const [jewels, setJewels] = useState<JSX.Element[]>([]);
   const [hit, setHit] = useState("");
+  const [hits, setHits] = useState(0);
+  const [misses, setMisses] = useState(0);
+  const [early, setEarly] = useState(0);
 
   interface annotation {
     TIME: string;
@@ -28,28 +31,28 @@ function Game() {
         setJewels((prevJewels) => [
           ...prevJewels,
           <Jewel
+            key={point.TIME}
             time={point.TIME}
             score={score}
             setScore={setScore}
             setLast={setHit}
+            setHits={setHits}
+            setMisses={setMisses}
+            setEarly={setEarly}
           />,
         ]);
       }, timeInMs);
     });
   }, []);
 
-  // const annotations: annotation[] = data;
-
   return (
     <div>
       <Navbar />
-      <Screen></Screen>
-      <div className="flex w-screen justify-center items-center">
-        <Score score={score} hit={hit}></Score>
+      <Screen />
+      <div className="flex w-screen justify-start items-center ml-5">
+        <Score score={score} hit={hit} hits={hits} misses={misses} early={early} />
       </div>
-
       {jewels}
-      {/* <Jewel score={score} setScore={setScore}></Jewel> */}
     </div>
   );
 }
