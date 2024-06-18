@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../Navbar";
 import Screen from "./Screen";
 import Jewel from "./Jewel";
@@ -9,17 +9,34 @@ import ReactPlayer from "react-player";
 import data from "../../audio_handling/smaller.json";
 
 function Game() {
+  const [time, setTime] = useState(0);
+  const reactPlayer = useRef<ReactPlayer>(null);
   const [score, setScore] = useState(0);
   const [jewels, setJewels] = useState<JSX.Element[]>([]);
   const [hit, setHit] = useState("");
-  const [lamine, setLamine] = useState("easy_pattern");
+  // const [lamine, setLamine] = useState("easy_pattern");
 
   interface annotation {
     TIME: string;
     LABEL: string;
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // return () => clearInterval(interval);
+      if (reactPlayer.current)
+        console.log(reactPlayer.current.getCurrentTime());
+    }, 1000);
+  }, []);
+
   const handlePlay = () => {
+    if (reactPlayer.current) setTime(reactPlayer.current.getCurrentTime());
+  };
+
+  const handlePause = () => {};
+
+  useEffect(() => {
+    // Parse and sort the data points by time
     const sortedDataPoints = data.sort(
       (a: annotation, b: annotation) => parseFloat(a.TIME) - parseFloat(b.TIME)
     );
@@ -31,7 +48,8 @@ function Game() {
         setJewels((prevJewels) => [
           ...prevJewels,
           <Jewel
-            time={point.TIME}
+            time={time}
+            cue={point.TIME}
             score={score}
             setScore={setScore}
             setLast={setHit}
@@ -39,50 +57,16 @@ function Game() {
         ]);
       }, timeInMs);
     });
-  };
-
-  // useEffect(() => {
-  //   // Parse and sort the data points by time
-  //   const sortedDataPoints = data.sort(
-  //     (a: annotation, b: annotation) => parseFloat(a.TIME) - parseFloat(b.TIME)
-  //   );
-
-  //   sortedDataPoints.forEach((point: annotation) => {
-  //     const timeInMs = parseFloat(point.TIME) * 1000;
-
-  //     setTimeout(() => {
-  //       setJewels((prevJewels) => [
-  //         ...prevJewels,
-  //         <Jewel
-  //           time={point.TIME}
-  //           score={score}
-  //           setScore={setScore}
-  //           setLast={setHit}
-  //         />,
-  //       ]);
-  //     }, timeInMs);
-  //   });
-  // }, []);
-
-  // const annotations: annotation[] = data;
+  }, []);
 
   return (
     <div>
-      <Navbar />
-      <Screen></Screen>
-      <div className="flex w-screen justify-center items-center">
-        <Score score={score} hit={hit}></Score>
+      <Navbar></Navbar>
+      <Screen />
+      <div className="flex justify-center items-center">
+        <Lamine reactPlayer={reactPlayer} setTime={setTime}></Lamine>
       </div>
-      <div className="flex w-screen h-4/5 justify-center items-center">
-        <Lamine
-          lamine={lamine}
-          setLamine={setLamine}
-          handlePlay={handlePlay}
-        ></Lamine>
-      </div>
-
       {jewels}
-      {/* <Jewel score={score} setScore={setScore}></Jewel> */}
     </div>
   );
 }
