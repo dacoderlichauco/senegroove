@@ -1,8 +1,9 @@
 export type Gem = {
   time: number;
-  label: 'f' | 'j';
+  label: string;
   position: { x: number; y: number };
-  missed?: boolean; // Add this property to track if the gem was missed
+  missed: boolean;
+  hit: boolean; // Add this line
 };
 
 export type Score = {
