@@ -30,7 +30,7 @@ const Screen: React.FC = () => {
             const position = Math.max(0, (1 - (timeUntilNowBar / gem.time)) * maxFallDistance);
 
             // Check if gem has passed the now bar without being hit
-            if (gem.position.y >= 1 && !gem.missed) {
+            if (position >= maxFallDistance && !gem.missed) {
               setScore(prevScore => ({ ...prevScore, misses: prevScore.misses + 1 }));
               gem.missed = true; // Mark gem as missed
             }
