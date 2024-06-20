@@ -65,7 +65,7 @@ const Lane: React.FC<LaneProps> = ({ keyLabel, orderIndex, gems, updateScore, vi
   }, [gems, videoRef]);
 
   return (
-    <div className={`lane lane-${orderIndex} border`} style={{ left: `${orderIndex * 20}%`, position: 'absolute', top: 0, height: '100%', width: '20%' }}>
+    <div className={`lane lane-${orderIndex} border`} style={{ left: `${orderIndex * 20}%`, position: 'absolute', top: 0, height: '100%', width: '20%', zIndex: 0 }}>
       {renderedGems.map((gem, index) => (
         <Gem key={index} gem={gem} />
       ))}

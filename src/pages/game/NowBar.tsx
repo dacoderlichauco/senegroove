@@ -64,7 +64,7 @@ const NowBar: React.FC<NowBarProps> = ({ keyLabel, videoRef, gems, updateScore }
   }, [gems, videoRef]);
 
   return (
-    <div className={`nowbar w-full h-10 ${color} flex items-center justify-center`} style={{ position: 'absolute', bottom: 0 }}>
+    <div className={`nowbar w-full h-10 ${color} flex items-center justify-center border-4 border-white`} style={{ position: 'absolute', bottom: 0 }}>
       <span className="text-white text-lg">{keyLabel.toUpperCase()}</span>
     </div>
   );
