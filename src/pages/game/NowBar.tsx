@@ -31,31 +31,42 @@ const NowBar: React.FC<NowBarProps> = ({ videoRef, gems, updateScore }) => {
 
       if (currentGem) {
         if ((currentGem.label === 'f' && event.key === 'f') || (currentGem.label === 'j' && event.key === 'j')) {
-          if ((event.key === 'f' && currentGem.label === 'f') || (event.key === 'j' && currentGem.label === 'j')) {
-            setScore(prevScore => ({ ...prevScore, hits: prevScore.hits + 1 }));
-            if (event.key === 'f') {
-              setLeftColor('bg-green-500');
-              setTimeout(() => setLeftColor('bg-pink-500'), 100);
-            }
-            if (event.key === 'j') {
-              setRightColor('bg-green-500');
-              setTimeout(() => setRightColor('bg-purple-500'), 100);
-            }
+          setScore(prevScore => ({ ...prevScore, hits: prevScore.hits + 1 }));
+          if (event.key === 'f') {
+            setLeftColor('bg-green-500');
+            setTimeout(() => setLeftColor('bg-pink-500'), 50);
+          }
+          if (event.key === 'j') {
+            setRightColor('bg-green-500');
+            setTimeout(() => setRightColor('bg-purple-500'), 50);
+          }
+        } else {
+          // Wrong key pressed for the current gem
+          setScore(prevScore => ({ ...prevScore, misses: prevScore.misses + 1 }));
+          currentGem.missed = true; // Mark gem as missed
+          if (event.key === 'f') {
+            setLeftColor('bg-red-500');
+            setTimeout(() => setLeftColor('bg-pink-500'), 50);
+          }
+          if (event.key === 'j') {
+            setRightColor('bg-red-500');
+            setTimeout(() => setRightColor('bg-purple-500'), 50);
           }
         }
       } else {
+        // No gem within the slop window, early hit
         setScore(prevScore => ({ ...prevScore, earlyHits: prevScore.earlyHits + 1 }));
         if (event.key === 'f') {
           setLeftColor('bg-red-500');
-          setTimeout(() => setLeftColor('bg-pink-500'), 100);
+          setTimeout(() => setLeftColor('bg-pink-500'), 50);
         }
         if (event.key === 'j') {
           setRightColor('bg-red-500');
-          setTimeout(() => setRightColor('bg-purple-500'), 100);
+          setTimeout(() => setRightColor('bg-purple-500'), 50);
         }
       }
 
-      updateScore({ ...score, misses: misses });
+      updateScore(score);
     }
   };
 
@@ -75,15 +86,17 @@ const NowBar: React.FC<NowBarProps> = ({ videoRef, gems, updateScore }) => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [score, misses]);
+  }, [score]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const currentTime = videoRef.current?.getCurrentTime();
-      if (currentTime) {
-        const missedGems = gems.filter(gem => gem.time < currentTime - slopWindow);
+      if (videoRef.current) {
+        const currentTime = videoRef.current.getCurrentTime();
+        const missedGems = gems.filter(gem => gem.time < currentTime - slopWindow && !gem.missed);
         if (missedGems.length > 0) {
           setMisses(prevMisses => prevMisses + missedGems.length);
+          missedGems.forEach(gem => gem.missed = true); // Mark these gems as missed
+          setScore(prevScore => ({ ...prevScore, misses: prevScore.misses + missedGems.length }));
         }
       }
     }, 100);

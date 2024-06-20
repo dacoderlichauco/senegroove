@@ -4,7 +4,7 @@ import Gem from "./Gem";
 import NowBar from "./NowBar";
 import Score from "./Score";
 import { Gem as GemType, Score as ScoreType } from "../../types";
-import Navbar from "../Navbar";
+
 import { loadGems } from "../../utils";
 
 const Screen: React.FC = () => {
@@ -28,13 +28,14 @@ const Screen: React.FC = () => {
         const screenHeight = window.innerHeight;
         const nowBarHeight = 50; // Height of the now bar in pixels
         const maxFallDistance = screenHeight - nowBarHeight;
+        const fallSpeed = maxFallDistance / 5; // Adjust this value to set the fall speed (pixels per second)
 
         setGems((prevGems) =>
           prevGems.map((gem) => {
             const timeUntilNowBar = gem.time - currentTime;
             const position = Math.max(
               0,
-              (1 - timeUntilNowBar / gem.time) * maxFallDistance
+              maxFallDistance - timeUntilNowBar * fallSpeed
             );
 
             // Check if gem has passed the now bar without being hit
