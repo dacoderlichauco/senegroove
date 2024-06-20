@@ -1,15 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ReactPlayer from 'react-player';
-import Gem from './Gem';
-import NowBar from './NowBar';
-import Score from './Score';
-import { Gem as GemType, Score as ScoreType } from '../../types';
-import { loadGems } from '../../utils';
+import React, { useEffect, useRef, useState } from "react";
+import ReactPlayer from "react-player";
+import Gem from "./Gem";
+import NowBar from "./NowBar";
+import Score from "./Score";
+import { Gem as GemType, Score as ScoreType } from "../../types";
+import { loadGems } from "../../utils";
 
 const Screen: React.FC = () => {
   const videoRef = useRef<ReactPlayer>(null);
   const [gems, setGems] = useState<GemType[]>([]);
-  const [score, setScore] = useState<ScoreType>({ hits: 0, misses: 0, earlyHits: 0 });
+  const [score, setScore] = useState<ScoreType>({
+    hits: 0,
+    misses: 0,
+    earlyHits: 0,
+  });
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
@@ -24,14 +28,20 @@ const Screen: React.FC = () => {
         const nowBarHeight = 50; // Height of the now bar in pixels
         const maxFallDistance = screenHeight - nowBarHeight;
 
-        setGems(prevGems =>
-          prevGems.map(gem => {
+        setGems((prevGems) =>
+          prevGems.map((gem) => {
             const timeUntilNowBar = gem.time - currentTime;
-            const position = Math.max(0, (1 - (timeUntilNowBar / gem.time)) * maxFallDistance);
+            const position = Math.max(
+              0,
+              (1 - timeUntilNowBar / gem.time) * maxFallDistance
+            );
 
             // Check if gem has passed the now bar without being hit
             if (position >= maxFallDistance && !gem.missed) {
-              setScore(prevScore => ({ ...prevScore, misses: prevScore.misses + 1 }));
+              setScore((prevScore) => ({
+                ...prevScore,
+                misses: prevScore.misses + 1,
+              }));
               gem.missed = true; // Mark gem as missed
             }
 
@@ -49,7 +59,7 @@ const Screen: React.FC = () => {
   }, []);
 
   const handleError = (e: any) => {
-    console.error('Error playing video:', e);
+    console.error("Error playing video:", e);
   };
 
   return (
@@ -72,9 +82,9 @@ const Screen: React.FC = () => {
       <Score score={score} />
       <button
         className="absolute bottom-20 right-10 p-4 bg-blue-500 text-white rounded"
-        onClick={() => setPlaying(prev => !prev)}
+        onClick={() => setPlaying((prev) => !prev)}
       >
-        {playing ? 'Pause' : 'Play'}
+        {playing ? "Pause" : "Play"}
       </button>
     </div>
   );
