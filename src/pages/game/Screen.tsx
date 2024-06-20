@@ -65,7 +65,6 @@ const Screen: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen bg-black">
-      <Navbar />
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         {gems.map((gem, index) => (
           <Gem key={index} gem={gem} />
