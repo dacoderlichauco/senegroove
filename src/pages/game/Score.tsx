@@ -7,10 +7,10 @@ type ScoreProps = {
 
 const Score: React.FC<ScoreProps> = ({ score }) => {
   return (
-    <div className="absolute top-0 left-0 p-4 bg-gray-700 text-white">
-      <p>Hits: {score.hits}</p>
-      <p>Misses: {score.misses}</p>
-      <p>Early Hits: {score.earlyHits}</p>
+    <div className="absolute top-0 right-0 p-4 text-white">
+      <div>Hits: {score.hits}</div>
+      <div>Misses: {score.misses}</div>
+      <div>Early Hits: {score.earlyHits}</div>
     </div>
   );
 };

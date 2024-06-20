@@ -6,8 +6,11 @@ type GemProps = {
 };
 
 const Gem: React.FC<GemProps> = ({ gem }) => {
-  const gemColor = gem.label === 'f' ? 'bg-lightblue-500' : 'bg-white';
-  const gemLeftPosition = gem.label === 'f' ? 'left-1/4' : 'left-3/4';
+  const gemColor = gem.missed
+    ? 'bg-red-500'
+    : gem.hit
+    ? 'bg-green-500'
+    : 'bg-blue-500'; // Default color for active gems
 
   // Only render gem if it's above the now bar (position.y < 1)
   if (gem.position.y >= 1) {
@@ -16,9 +19,10 @@ const Gem: React.FC<GemProps> = ({ gem }) => {
 
   return (
     <div
-      className={`absolute rounded-full w-8 h-8 transition-transform ${gemColor} ${gemLeftPosition}`}
+      className={`absolute rounded-full w-8 h-8 transition-transform ${gemColor}`}
       style={{
-        transform: `translateY(${gem.position.y * 100}vh)`, // Use viewport height for full-screen effect
+        top: `${gem.position.y * 100}vh`, // Positioning based on the gem's position
+        transform: `translateY(${gem.position.y * 100}%)`, // Ensuring full-screen effect
       }}
     ></div>
   );
