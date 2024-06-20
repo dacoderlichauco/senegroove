@@ -4,6 +4,7 @@ import Gem from "./Gem";
 import NowBar from "./NowBar";
 import Score from "./Score";
 import { Gem as GemType, Score as ScoreType } from "../../types";
+import Navbar from "../Navbar";
 import { loadGems } from "../../utils";
 
 const Screen: React.FC = () => {
@@ -64,6 +65,7 @@ const Screen: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen bg-black">
+      <Navbar />
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         {gems.map((gem, index) => (
           <Gem key={index} gem={gem} />

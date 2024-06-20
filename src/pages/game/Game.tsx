@@ -5,7 +5,7 @@ import Navbar from "../Navbar";
 const Game: React.FC = () => {
   return (
     <div className="Game">
-      <Navbar />
+      {/* <Navbar /> */}
       <Screen />
     </div>
   );
