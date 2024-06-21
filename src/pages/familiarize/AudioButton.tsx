@@ -5,13 +5,18 @@ import * as Tone from "tone"; // Import Tone.js for sound
 type AudioButtonProps = {
   strike: string;
   keyTrigger: string;
+  // tones: { [key: string]: Tone.Player };
+  tone: Tone.Player;
 };
 
-function AudioButton({ strike, keyTrigger }: AudioButtonProps) {
+function AudioButton({ strike, keyTrigger, tone }: AudioButtonProps) {
   // State to store ripple effects
   const [ripples, setRipples] = useState<Array<{ id: number }>>([]);
   // State to track the next ripple ID
   const [nextRippleId, setNextRippleId] = useState(0);
+  // const [pressed, setPressed] = useState(false);
+
+  // let pressed = false;
 
   // Function to handle playing sound and creating a ripple effect
   const handlePlaySound = async () => {
@@ -19,12 +24,7 @@ function AudioButton({ strike, keyTrigger }: AudioButtonProps) {
     setRipples((prev) => [...prev, ripple]);
     setNextRippleId((prev) => prev + 1);
 
-    // Create and play the sound using Tone.js
-    const url = `${process.env.PUBLIC_URL}/audio/${strike}_fix.wav`;
-    const player = new Tone.Player(url, () => {
-      player.toDestination();
-      player.start();
-    });
+    tone.start(Tone.context.currentTime);
 
     await Tone.start();
 
@@ -36,16 +36,22 @@ function AudioButton({ strike, keyTrigger }: AudioButtonProps) {
 
   // Function to handle key press events
   const handleKeyPress = (event: KeyboardEvent) => {
-    if (event.key.toLowerCase() === keyTrigger.toLowerCase()) {
+    if (event.repeat) return;
+    // let pressed = false;
+    const key = event.key.toLowerCase();
+
+    // if (key === pressed) return;
+
+    if (key === keyTrigger) {
       handlePlaySound();
     }
   };
 
   // useEffect hook to add/remove key press event listener
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyPress);
+    window.addEventListener("keypress", handleKeyPress);
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener("keypress", handleKeyPress);
     };
   }, [nextRippleId]); // Re-run when nextRippleId changes
 
