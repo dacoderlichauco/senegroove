@@ -1,17 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import Lane from './Lane';
-import { Gem as GemType, Score as ScoreType } from '../../types';
+import { Gem as GemType } from '../../types';
 import { loadGems } from '../../utils';
 
 const Screen: React.FC = () => {
   const videoRef = useRef<ReactPlayer>(null);
   const [gems, setGems] = useState<GemType[]>([]);
-  const [score, setScore] = useState<ScoreType>({
-    hits: 0,
-    misses: 0,
-    earlyHits: 0,
-  });
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
@@ -24,18 +19,19 @@ const Screen: React.FC = () => {
         ref={videoRef}
         url="easy_pattern.mp4"
         playing={playing}
-        controls
+        controls={false}
         width="100%"
         height="75%"
         style={{ position: 'relative', zIndex: 1 }}
       />
-      <div className="absolute top-0 w-full h-full" style={{ zIndex: 0 }}>
-        <Lane keyLabel="f" orderIndex={0} gems={gems.filter(g => g.label === 'f')} updateScore={setScore} videoRef={videoRef} />
-        <Lane keyLabel="j" orderIndex={1} gems={gems.filter(g => g.label === 'j')} updateScore={setScore} videoRef={videoRef} />
+      <div className="absolute top-0 w-full h-full" style={{ zIndex: 2 }}>
+        <Lane keyLabel="f" orderIndex={0} gems={gems.filter(g => g.label === 'f')} videoRef={videoRef} />
+        <Lane keyLabel="j" orderIndex={1} gems={gems.filter(g => g.label === 'j')} videoRef={videoRef} />
       </div>
       <button
         className="absolute bottom-20 right-10 p-4 bg-blue-500 text-white rounded"
         onClick={() => setPlaying(prev => !prev)}
+        style={{ zIndex: 3 }} // Ensure the button is on top
       >
         {playing ? "Pause" : "Play"}
       </button>

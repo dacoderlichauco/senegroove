@@ -24,7 +24,7 @@ const Gem: React.FC<GemProps> = ({ gem }) => {
         top: `${gem.position.y * 100}vh`, // Positioning based on the gem's position
         transform: `translateY(${gem.position.y * 100}%)`, // Ensuring full-screen effect
         transition: 'transform 0.1s linear', // Smooth fall animation
-        zIndex: 2, // Ensure gems appear above the video
+        zIndex: 3, // Ensure gems appear above the video and lanes
       }}
     ></div>
   );

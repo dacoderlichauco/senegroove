@@ -8,11 +8,10 @@ type LaneProps = {
   keyLabel: string;
   orderIndex: number;
   gems: GemType[];
-  updateScore: (score: Score) => void;
   videoRef: React.RefObject<ReactPlayer>;
 };
 
-const Lane: React.FC<LaneProps> = ({ keyLabel, orderIndex, gems, updateScore, videoRef }) => {
+const Lane: React.FC<LaneProps> = ({ keyLabel, orderIndex, gems, videoRef }) => {
   const [score, setScore] = useState<Score>({ hits: 0, misses: 0, earlyHits: 0 });
   const [active, setActive] = useState(false);
   const [renderedGems, setRenderedGems] = useState<GemType[]>(gems);
@@ -59,17 +58,25 @@ const Lane: React.FC<LaneProps> = ({ keyLabel, orderIndex, gems, updateScore, vi
         // Filter out gems that have passed the NowBar
         const filteredGems = updatedGems.filter(gem => gem.position.y < 1);
         setRenderedGems(filteredGems);
+
+        // Add console logs to track gem positions
+        console.log(`Lane ${orderIndex} - Rendered Gems:`, filteredGems);
       }
     }, 100);
     return () => clearInterval(interval);
-  }, [gems, videoRef]);
+  }, [gems, videoRef, orderIndex]);
 
   return (
-    <div className={`lane lane-${orderIndex} border`} style={{ left: `${orderIndex * 20}%`, position: 'absolute', top: 0, height: '100%', width: '20%', zIndex: 0 }}>
+    <div className={`lane lane-${orderIndex}`} style={{ left: `${orderIndex * 20}%`, position: 'absolute', top: 0, height: '100%', width: '20%', zIndex: 2, border: '2px solid rgba(255, 255, 255, 0.3)' }}>
+      <div className="absolute top-0 left-0 text-white p-2">
+        <div>Hits: {score.hits}</div>
+        <div>Misses: {score.misses}</div>
+        <div>Early Hits: {score.earlyHits}</div>
+      </div>
       {renderedGems.map((gem, index) => (
         <Gem key={index} gem={gem} />
       ))}
-      <NowBar keyLabel={keyLabel} videoRef={videoRef} gems={renderedGems} updateScore={updateScore} />
+      <NowBar keyLabel={keyLabel} videoRef={videoRef} gems={renderedGems} updateScore={setScore} />
     </div>
   );
 };
