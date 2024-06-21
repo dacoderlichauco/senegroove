@@ -75,7 +75,7 @@ const Screen: React.FC = () => {
         ref={videoRef}
         url="easy_pattern.mp4"
         playing={playing}
-        controls
+        controls={false}
         width="100%"
         height="75%"
         onError={handleError}
