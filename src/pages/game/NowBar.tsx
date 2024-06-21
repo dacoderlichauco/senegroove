@@ -21,13 +21,13 @@ const NowBar: React.FC<NowBarProps> = ({ keyLabel, videoRef, gems, updateScore }
         const currentGem = gems.find(gem => Math.abs(gem.time - currentTime) <= slopWindow);
 
         if (currentGem) {
-          if (currentGem.label === keyLabel) {
+          if (currentGem.label === keyLabel && !currentGem.hit) {
             setScore(prevScore => ({ ...prevScore, hits: prevScore.hits + 1 }));
             setColor('bg-green-500');
             setTimeout(() => setColor('bg-default-color'), 50);
+            currentGem.hit = true; // Mark the gem as hit
           } else {
-            setScore(prevScore => ({ ...prevScore, misses: prevScore.misses + 1 }));
-            currentGem.missed = true;
+            setScore(prevScore => ({ ...prevScore, earlyHits: prevScore.earlyHits + 1 }));
             setColor('bg-red-500');
             setTimeout(() => setColor('bg-default-color'), 50);
           }
@@ -37,7 +37,7 @@ const NowBar: React.FC<NowBarProps> = ({ keyLabel, videoRef, gems, updateScore }
           setTimeout(() => setColor('bg-default-color'), 50);
         }
 
-        updateScore(score);
+        updateScore(prevScore => ({ ...prevScore, ...score }));
       }
     }
   };
@@ -53,10 +53,11 @@ const NowBar: React.FC<NowBarProps> = ({ keyLabel, videoRef, gems, updateScore }
     const interval = setInterval(() => {
       if (videoRef.current) {
         const currentTime = videoRef.current.getCurrentTime();
-        const missedGems = gems.filter(gem => gem.time < currentTime - slopWindow && !gem.missed);
+        const missedGems = gems.filter(gem => gem.time < currentTime - slopWindow && !gem.missed && !gem.hit);
         if (missedGems.length > 0) {
           setScore(prevScore => ({ ...prevScore, misses: prevScore.misses + missedGems.length }));
           missedGems.forEach(gem => gem.missed = true); // Mark these gems as missed
+          updateScore(prevScore => ({ ...prevScore, misses: prevScore.misses + missedGems.length }));
         }
       }
     }, 100);
