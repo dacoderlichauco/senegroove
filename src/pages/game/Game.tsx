@@ -1,12 +1,14 @@
 import React from "react";
-import Screen from "./Screen";
+
 import Navbar from "../Navbar";
+import Lane from "./Lane";
 
 const Game: React.FC = () => {
   return (
     <div className="Game">
       <Navbar />
-      <Screen />
+      <Lane width={window.innerWidth/2} height={window.innerHeight} />
+      <Lane width={window.innerWidth/2} height={window.innerHeight} />
     </div>
   );
 };

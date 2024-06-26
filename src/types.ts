@@ -1,9 +1,8 @@
 export type Gem = {
-  time: number;
-  label: string;
-  position: { x: number; y: number };
-  missed: boolean;
-  hit: boolean; // Add this line
+  x: number;
+  y: number;
+  size: number;
+  speed: number;
 };
 
 export type Score = {
