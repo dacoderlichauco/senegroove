@@ -10,7 +10,7 @@ const Gem: React.FC<GemProps> = ({x,size,speed}) => {
     useEffect(() => {
         const interval= setInterval(() => {
             setY(prevY => prevY + speed);
-    },100);
+    },16);
     return () => clearInterval(interval);
     }, [speed]);
 
