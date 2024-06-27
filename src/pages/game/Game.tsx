@@ -12,11 +12,16 @@ type GemData = {
 const Game: React.FC = () => {
   const [gemData, setGemData] = useState<GemData[]>([]);
   const [countdownData, setCountdownData] = useState<GemData[]>([]);
+  
 
   useEffect(() => {
     fetch('/fandj.json') // Adjust the path to your JSON file
       .then(response => response.json())
-      .then(data => setGemData(data))
+      .then(data => {
+        setGemData(data.filter((item: GemData) => item.LABEL === 'f' || item.LABEL === 'j'));
+      setCountdownData(data.filter((item: GemData) => !isNaN(Number(item.LABEL))));
+      }
+      )
       .catch(error => console.error('Error loading JSON:', error));
   }, []);
 
@@ -36,8 +41,9 @@ const Game: React.FC = () => {
       >
 
       
-      <Lane l_width={window.innerWidth/2} l_height={window.innerHeight} keyAssigned="f" />
-      <Lane l_width={window.innerWidth/2} l_height={window.innerHeight}  keyAssigned="j"/>
+      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="f" gemData={gemData.filter(gem => gem.LABEL === 'f')} />
+      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="j" gemData={gemData.filter(gem => gem.LABEL === 'j')} />
+    
       </div>
     </div>
   );

@@ -1,33 +1,53 @@
 import React, {useEffect, useState} from "react";
 import {Gem as GemType }  from "../../types";
 
-type GemProps = Omit<GemType,"y">;
+type GemProps = {
+    x: number;
+    y: number;
+    size: number;
+    speed: number;
+  };
 
 
-const Gem: React.FC<GemProps> = ({x,size,speed}) => {
-    
-    const [y, setY]=useState(0);
+const Gem: React.FC<GemProps> = ({x,y,size,speed}) => {
+    const [position, setPosition] = useState({ x, y });
+
     useEffect(() => {
-        const interval= setInterval(() => {
-            setY(prevY => prevY + speed);
-    },16);
-    return () => clearInterval(interval);
-    }, [speed]);
+        let animationFrameId: number;
+        const startTime = performance.now();
+    
+        const updatePosition = (currentTime: number) => {
+          const elapsedTime = currentTime - startTime;
+          setPosition(prevPosition => ({
+            ...prevPosition,
+            y: prevPosition.y + (speed * elapsedTime) / 1000, // Update y based on elapsed time
+          }));
+          animationFrameId = requestAnimationFrame(updatePosition);
+        };
+    
+        animationFrameId = requestAnimationFrame(updatePosition);
+    
+        return () => cancelAnimationFrame(animationFrameId);
+      }, [speed]);
 
-    if (y>window.innerHeight) {
-        return null;
-    }
+  // Only render gem if it's above the now bar (position.y < 1)
+  if (position.y > 1) {
+    return null;
+  }
+    
 
     return (
 
         <div style={{
-            position: "absolute",
-            top: y, 
-            left: x,
-            width: size,
-            height: size,
-            backgroundColor: "blue",
-        }}></div>
+            position: 'absolute',
+            left: `${x}px`,
+            top: `${position.y * 100}%`, // Convert y to percentage of the lane height
+            width: `${size}px`,
+            height: `${size}px`,
+            backgroundColor: 'blue',
+            borderRadius: '50%',
+          }}
+        ></div>
     );
 };
 

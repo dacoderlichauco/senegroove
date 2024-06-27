@@ -13,13 +13,12 @@ const Bar: React.FC<BarProps> = ({b_width, b_height, isKeyPressed}) => {
     return (
         <div
         style={{
-        position: "absolute",
-        bottom: 0,
-        width: b_width,
-        height:b_height,
-        backgroundColor: isKeyPressed ? 'red' : 'initial',
-        border: "1px solid red",
-        overflow: "hidden",
+          width: `${b_width}px`,
+          height: `${b_height}px`,
+          backgroundColor: isKeyPressed ? 'red' : 'initial',
+          border: '1px solid black', // Added a white border as requested earlier
+          position: 'absolute',
+          bottom: 0, // Position it at the bottom of the lane
       }}
       >
         
