@@ -1,50 +1,26 @@
-import React, {useEffect, useState, useRef} from "react";
-
-import Navbar from "../Navbar";
+import React, { useEffect, useState } from "react";
 import Lane from "./Lane";
-
-
-type GemData = {
-  TIME: string;
-  LABEL: string;
-};
+import { GemData } from "../../types";
 
 const Game: React.FC = () => {
   const [gemData, setGemData] = useState<GemData[]>([]);
-  const [countdownData, setCountdownData] = useState<GemData[]>([]);
-  
 
   useEffect(() => {
-    fetch('/fandj.json') // Adjust the path to your JSON file
+    fetch('/path/to/your/json/file.json')
       .then(response => response.json())
       .then(data => {
-        setGemData(data.filter((item: GemData) => item.LABEL === 'f' || item.LABEL === 'j'));
-      setCountdownData(data.filter((item: GemData) => !isNaN(Number(item.LABEL))));
-      }
-      )
-      .catch(error => console.error('Error loading JSON:', error));
+        console.log("Fetched gem data:", data);
+        setGemData(data);
+      })
+      .catch(error => console.error('Error fetching gem data:', error));
   }, []);
 
+  const nowBarHeight = 100; // Example value, adjust as needed
+
   return (
-    <div className="Game">
-      <Navbar />
-      <div
-      
-      style={{
-        display: 'flex', // Use flexbox
-        justifyContent: 'center', // Center the lanes horizontally
-        alignItems: 'flex-start', // Align lanes to the top of the container
-        height: '100vh',
-        backgroundColor: '#f0f0f0',
-
-      }}
-      >
-
-      
-      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="f" gemData={gemData.filter(gem => gem.LABEL === 'f')} />
-      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="j" gemData={gemData.filter(gem => gem.LABEL === 'j')} />
-    
-      </div>
+    <div className="game-container" style={{ display: "flex", flexDirection: "row" }}>
+      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="f" gemData={gemData} nowBarHeight={nowBarHeight} />
+      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="j" gemData={gemData} nowBarHeight={nowBarHeight} />
     </div>
   );
 };
