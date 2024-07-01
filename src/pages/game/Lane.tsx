@@ -1,91 +1,83 @@
-import React, { useEffect, useState, useRef } from "react";
-import Gem from "./Gem";
-import Bar from "./Bar";
-import { GemData } from "../../types";
+import React, { useState, useEffect } from 'react';
+import Gem from './Gem'; // Ensure this path is correct based on your file structure
+
+type JsonEntry = {
+  TIME: string;
+  LABEL: string;
+};
 
 type LaneProps = {
   l_width: number;
   l_height: number;
   keyAssigned: string;
-  gemData: GemData[];
+  gemData: JsonEntry[];
   nowBarHeight: number;
+  start: boolean;
 };
 
-const Lane: React.FC<LaneProps> = ({ l_width, l_height, keyAssigned, gemData, nowBarHeight }) => {
-  const [isKeyPressed, setIsKeyPressed] = useState(false);
-  const isKeyPressedRef = useRef(false);
-  const [gems, setGems] = useState<{ x: number; y: number; size: number; speed: number; time: number }[]>([]);
-
-  const gemSize = 20;
-  const gem_x = l_width / 2 - gemSize / 2;
+const Lane: React.FC<LaneProps> = ({ l_width, l_height, keyAssigned, gemData, nowBarHeight, start }) => {
+  const [gemPositions, setGemPositions] = useState<number[]>(new Array(gemData.length).fill(-Infinity));
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const T_window = 5; // The amount of time (in seconds) that spans the window height
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === keyAssigned && !isKeyPressedRef.current) {
-        setIsKeyPressed(true);
-        isKeyPressedRef.current = true;
-        console.log("key pressed", event.key);
-      }
-    };
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.key === keyAssigned) {
-        setIsKeyPressed(false);
-        isKeyPressedRef.current = false;
-        console.log("key unpressed", event.key);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
+    const animationFrameIds: number[] = [];
 
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, [keyAssigned]);
+    const updateGemPositions = () => {
+      if (startTime !== null) {
+        const currentTime = (Date.now() - startTime) / 1000; // Current time in seconds
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const currentTime = (new Date()).getTime() / 1000;
-      console.log('Current time:', currentTime);
-      console.log('Gem data:', gemData);
-
-      const newGems = gemData
-        .map(gem => {
-          const gemTime = parseFloat(gem.TIME);
-          const duration = currentTime - gemTime;
-          const speed = nowBarHeight / duration;
-          console.log('Creating new gem:', gem, 'with speed:', speed);
-
-          return {
-            x: gem_x,
-            y: 0,
-            size: gemSize,
-            speed: speed,
-            time: gemTime,
-          };
+        const newPositions = gemData.map(entry => {
+          const gemTime = parseFloat(entry.TIME); // Time of the gem in seconds
+          const position = l_height * (1 - (currentTime - gemTime) / T_window);
+          console.log(`Gem time: ${gemTime}, Current time: ${currentTime}, Position: ${position}`);
+          return position;
         });
 
-      console.log('Adding new gems:', newGems);
-      setGems(prevGems => [...prevGems, ...newGems]);
-    }, 100);
+        setGemPositions(newPositions);
 
-    return () => clearInterval(interval);
-  }, [gemData, gem_x, gemSize, nowBarHeight]);
+        newPositions.forEach((position, index) => {
+          if (position < l_height - nowBarHeight) {
+            animationFrameIds[index] = requestAnimationFrame(updateGemPositions);
+          }
+        });
+      }
+    };
+
+    if (start) {
+      setStartTime(Date.now());
+      updateGemPositions();
+    }
+
+    return () => {
+      animationFrameIds.forEach(id => cancelAnimationFrame(id));
+    };
+  }, [gemData, start, startTime, l_height, nowBarHeight, T_window]);
+
+  const gemSize = nowBarHeight; // Gem size is equal to nowBarHeight
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: l_width,
-        height: l_height,
-        border: "1px solid black",
-        overflow: "hidden",
-      }}
-    >
-      {gems.map((gem, index) => (
-        <Gem key={index} x={gem.x} y={gem.y} size={gem.size} speed={gem.speed} />
+    <div style={{ width: l_width, height: l_height, position: 'relative', border: '1px solid black' }}>
+      {gemPositions.map((position, index) => (
+        position >= 0 && position < (l_height - nowBarHeight) && (
+          <Gem
+            key={index}
+            size={gemSize}
+            left={(l_width - gemSize) / 2}
+            top={position}
+          />
+        )
       ))}
-      <Bar b_width={l_width} b_height={gemSize} isKeyPressed={isKeyPressed} />
+      <div
+        style={{
+          width: '100%',
+          height: nowBarHeight,
+          backgroundColor: 'red',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+        }}
+      />
     </div>
   );
 };

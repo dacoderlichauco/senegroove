@@ -1,26 +1,46 @@
 import React, { useEffect, useState } from "react";
 import Lane from "./Lane";
-import { GemData } from "../../types";
+
+type JsonEntry = {
+  TIME: string;
+  LABEL: string;
+};
+let barHeight = 60;
 
 const Game: React.FC = () => {
-  const [gemData, setGemData] = useState<GemData[]>([]);
+  const [countdownArray, setCountdownArray] = useState<JsonEntry[]>([]);
+  const [jArray, setJArray] = useState<JsonEntry[]>([]);
+  const [fArray, setFArray] = useState<JsonEntry[]>([]);
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
-    fetch('/path/to/your/json/file.json')
-      .then(response => response.json())
-      .then(data => {
-        console.log("Fetched gem data:", data);
-        setGemData(data);
+    fetch('/fandj.json')
+      .then((response) => response.json())
+      .then((data: JsonEntry[]) => {
+        const countdown = data.filter(entry => /\d/.test(entry.LABEL));
+        const j_arr = data.filter(entry => entry.LABEL === 'j');
+        const f_arr = data.filter(entry => entry.LABEL === 'f');
+
+        setCountdownArray(countdown);
+        setJArray(j_arr);
+        setFArray(f_arr);
       })
-      .catch(error => console.error('Error fetching gem data:', error));
+      .catch((error) => console.error('Error loading JSON:', error));
   }, []);
 
-  const nowBarHeight = 100; // Example value, adjust as needed
+  const handleStart = () => {
+    setStart(true);
+  };
 
   return (
-    <div className="game-container" style={{ display: "flex", flexDirection: "row" }}>
-      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="f" gemData={gemData} nowBarHeight={nowBarHeight} />
-      <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="j" gemData={gemData} nowBarHeight={nowBarHeight} />
+    <div>
+      <button onClick={handleStart}>Start Gems</button>
+      {start && (
+        <div className="game-container" style={{ display: "flex", flexDirection: "row" }}>
+          <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="f" gemData={fArray} nowBarHeight={barHeight} start={start} />
+          <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="j" gemData={jArray} nowBarHeight={barHeight}start={start} />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,53 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 
 type GemProps = {
-  x: number;
-  y: number;
   size: number;
-  speed: number;
+  left: number;
+  top: number;
 };
 
-const Gem: React.FC<GemProps> = ({ x, y, size, speed }) => {
-  const [position, setPosition] = useState({ x, y });
-
-  useEffect(() => {
-    let animationFrameId: number;
-    const startTime = performance.now();
-
-    const updatePosition = (currentTime: number) => {
-      const elapsedTime = currentTime - startTime;
-      setPosition(prevPosition => {
-        const newY = prevPosition.y + (speed * elapsedTime) / 1000;
-        console.log('Gem position:', newY);
-        return {
-          ...prevPosition,
-          y: newY, // Update y based on elapsed time
-        };
-      });
-      animationFrameId = requestAnimationFrame(updatePosition);
-    };
-
-    animationFrameId = requestAnimationFrame(updatePosition);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [speed]);
-
-  if (position.y > 1) {
-    return null;
-  }
-
+const Gem: React.FC<GemProps> = ({ size, left, top }) => {
   return (
     <div
       style={{
-        position: 'absolute',
-        left: `${x}px`,
-        top: `${position.y * 100}%`, // Convert y to percentage of the lane height
-        width: `${size}px`,
-        height: `${size}px`,
+        width: size,
+        height: size,
         backgroundColor: 'blue',
-        borderRadius: '50%',
+        position: 'absolute',
+        left: left,
+        top: top,
       }}
-    ></div>
+    />
   );
 };
 
