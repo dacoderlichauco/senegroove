@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
 
 interface GemData {
@@ -10,14 +10,14 @@ const Animation: React.FC = () => {
   const delta_y = window.innerHeight;
   const y_nb = window.innerHeight - 40;
   const x_position = 100;
-  const delta_t = 10;
+  const delta_t = 5;
   const width = '500px';  // Desired width
   const height = '400px'; // Desired height maintaining the 16:9 aspect ratio
 
-  // State to hold the current time of the video, the positions of the gems, and the JSON data
-  const [currentTime, setCurrentTime] = useState(0);
+  // State to hold the positions of the gems and the JSON data
   const [gemPositions, setGemPositions] = useState<number[]>([]);
   const [gemData, setGemData] = useState<GemData[]>([]);
+  const videoRef = useRef<ReactPlayer>(null);
 
   // Function to fetch the JSON data
   useEffect(() => {
@@ -41,14 +41,19 @@ const Animation: React.FC = () => {
     setGemPositions(positions);
   };
 
-  // Event handler for video progress
-  const handleProgress = (state: { playedSeconds: number }) => {
-    setCurrentTime(state.playedSeconds);
+  // Animation loop
+  const animate = () => {
+    if (videoRef.current) {
+      const currentTime = videoRef.current.getCurrentTime();
+      updateGemPositions(currentTime);
+    }
+    requestAnimationFrame(animate);
   };
 
   useEffect(() => {
-    updateGemPositions(currentTime);
-  }, [currentTime, gemData]);
+    // Start the animation loop
+    requestAnimationFrame(animate);
+  }, [gemData]); // Start the loop after gem data is loaded
 
   return (
     <div>
@@ -63,11 +68,11 @@ const Animation: React.FC = () => {
         }}
       >
         <ReactPlayer
+          ref={videoRef}
           url="/easy_pattern.mp4"
           controls={true}
           width="100%"
           height="100%"
-          onProgress={handleProgress}
         />
       </div>
       <div className="absolute" style={{ top: y_nb, left: 0, width: window.innerWidth, height: 40, backgroundColor: 'yellow' }} />
