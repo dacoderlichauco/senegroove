@@ -8,9 +8,9 @@ interface GemData {
 
 const Animation: React.FC = () => {
   const delta_y = window.innerHeight;
-  const y_nb = window.innerHeight - 40;
+  const y_nb = 0; // Now bar position at the top of the screen
   const x_position = 100;
-  const delta_t = 5;
+  const delta_t = 3;
   const width = '500px';  // Desired width
   const height = '400px'; // Desired height maintaining the 16:9 aspect ratio
 
@@ -37,7 +37,7 @@ const Animation: React.FC = () => {
   // Function to update gem positions based on the current time
   const updateGemPositions = (t: number) => {
     const timeValues = gemData.map(entry => parseFloat(entry.TIME));
-    const positions = timeValues.map(t_g => (delta_y / delta_t) * (t_g - t) + y_nb);
+    const positions = timeValues.map(t_g => delta_y - ((delta_y / delta_t) * (t_g - t) + y_nb));
     setGemPositions(positions);
   };
 
@@ -75,7 +75,7 @@ const Animation: React.FC = () => {
           height="100%"
         />
       </div>
-      <div className="absolute" style={{ top: y_nb, left: 0, width: window.innerWidth, height: 40, backgroundColor: 'yellow' }} />
+      <div className="absolute" style={{ top: delta_y-40, left: 0, width: window.innerWidth, height: 40, backgroundColor: 'yellow' }} />
       {gemPositions.map((pos, index) => (
         <div
           key={index}
