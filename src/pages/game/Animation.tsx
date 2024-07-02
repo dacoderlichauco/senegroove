@@ -1,68 +1,90 @@
 import React, { useState, useEffect } from 'react';
+import ReactPlayer from 'react-player';
 
-const jsonData=[{"TIME": "1.912125000", "LABEL": "4"}, {"TIME": "2.464500000", "LABEL": "3"}, {"TIME": "3.033250000", "LABEL": "2"}, {"TIME": "3.598250000", "LABEL": "1"}, {"TIME": "4.176750000", "LABEL": "f"}, {"TIME": "5.038500000", "LABEL": "f"}, {"TIME": "5.343187500", "LABEL": "f"}, {"TIME": "5.900437500", "LABEL": "j"}, {"TIME": "6.444937500", "LABEL": "j"}, {"TIME": "7.253625000", "LABEL": "f"}, {"TIME": "7.532250000", "LABEL": "j"}, {"TIME": "8.052750000", "LABEL": "j"}, {"TIME": "8.609812500", "LABEL": "f"}, {"TIME": "9.413812500", "LABEL": "f"}, {"TIME": "9.719812500", "LABEL": "j"}, {"TIME": "10.244812500", "LABEL": "j"}, {"TIME": "10.779187500", "LABEL": "f"}, {"TIME": "11.569500000", "LABEL": "f"}]
-
-
-
+interface GemData {
+  TIME: string;
+  LABEL: string;
+}
 
 const Animation: React.FC = () => {
-    const [positions, setPositions] =  useState<number[]>(new Array(jsonData.length).fill(0));
-    const x_goal = 500; // Define the target x-coordinate (adjust as needed)
+  const delta_y = window.innerHeight;
+  const y_nb = window.innerHeight - 40;
+  const x_position = 100;
+  const delta_t = 10;
+  const width = '500px';  // Desired width
+  const height = '400px'; // Desired height maintaining the 16:9 aspect ratio
 
-    useEffect(() => {
-        const animationFrameIds: number[] = [];
-        const startTimes: number[] = new Array(jsonData.length).fill(null);
-    
-        jsonData.forEach((entry, index) => {
-          const duration = parseFloat(entry.TIME) * 1000; // Convert time to milliseconds
-    
-          const animate = (time: number) => {
-            if (!startTimes[index]) startTimes[index] = time;
-            const elapsed = time - startTimes[index];
-            const progress = Math.min(elapsed / duration, 1);
-    
-            setPositions((prev) => {
-              const newPositions = [...prev];
-              newPositions[index] = progress * x_goal;
-              return newPositions;
-            });
-    
-            if (progress < 1) {
-              animationFrameIds[index] = requestAnimationFrame(animate);
-            }
-          };
-    
-          animationFrameIds[index] = requestAnimationFrame(animate);
-        });
-    
-        return () => {
-          animationFrameIds.forEach((id) => cancelAnimationFrame(id));
-        };
-      }, [x_goal]);
+  // State to hold the current time of the video, the positions of the gems, and the JSON data
+  const [currentTime, setCurrentTime] = useState(0);
+  const [gemPositions, setGemPositions] = useState<number[]>([]);
+  const [gemData, setGemData] = useState<GemData[]>([]);
+
+  // Function to fetch the JSON data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/fandj.json'); // Adjust the path accordingly
+        const data: GemData[] = await response.json();
+        setGemData(data);
+      } catch (error) {
+        console.error('Error fetching JSON data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Function to update gem positions based on the current time
+  const updateGemPositions = (t: number) => {
+    const timeValues = gemData.map(entry => parseFloat(entry.TIME));
+    const positions = timeValues.map(t_g => (delta_y / delta_t) * (t_g - t) + y_nb);
+    setGemPositions(positions);
+  };
+
+  // Event handler for video progress
+  const handleProgress = (state: { playedSeconds: number }) => {
+    setCurrentTime(state.playedSeconds);
+  };
+
+  useEffect(() => {
+    updateGemPositions(currentTime);
+  }, [currentTime, gemData]);
 
   return (
-
-    <div className="h-screen flex items-start overflow-hidden">
-      {positions.map((position, index) => (
+    <div>
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: width,
+          height: height,
+          overflow: 'hidden',
+        }}
+      >
+        <ReactPlayer
+          url="/easy_pattern.mp4"
+          controls={true}
+          width="100%"
+          height="100%"
+          onProgress={handleProgress}
+        />
+      </div>
+      <div className="absolute" style={{ top: y_nb, left: 0, width: window.innerWidth, height: 40, backgroundColor: 'yellow' }} />
+      {gemPositions.map((pos, index) => (
         <div
           key={index}
-          className="w-16 h-16 bg-blue-500"
-          style={{ transform: `translateX(${position}px)`, position: 'absolute', top: `${index * 70}px` }}
+          className="absolute"
+          style={{
+            top: pos,
+            left: x_position,
+            width: '50px',  // Width of the gem
+            height: '50px', // Height of the gem
+            backgroundColor: 'blue', // Color of the gem
+          }}
         />
       ))}
-      
-      <div
-        className="bg-red-500"
-        style={{
-          width: '10px',
-          height: '100%',
-          position: 'absolute',
-          left: '500px',
-          top: '0',
-        }}
-      />
     </div>
-
   );
 };
 

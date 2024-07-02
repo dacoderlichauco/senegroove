@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Lane from "./Lane";
+import Animation from "./Animation";
+import ReactPlayer from 'react-player';
 
 type JsonEntry = {
   TIME: string;
@@ -33,15 +35,20 @@ const Game: React.FC = () => {
   };
 
   return (
+    // <div>
+    //   <button onClick={handleStart}>Start Gems</button>
+    //   {start && (
+    //     <div className="game-container" style={{ display: "flex", flexDirection: "row" }}>
+    //       <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="f" gemData={fArray} nowBarHeight={barHeight} start={start} />
+    //       <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="j" gemData={jArray} nowBarHeight={barHeight}start={start} />
+    //     </div>
+    //   )}
+    // </div>
     <div>
-      <button onClick={handleStart}>Start Gems</button>
-      {start && (
-        <div className="game-container" style={{ display: "flex", flexDirection: "row" }}>
-          <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="f" gemData={fArray} nowBarHeight={barHeight} start={start} />
-          <Lane l_width={window.innerWidth / 2} l_height={window.innerHeight} keyAssigned="j" gemData={jArray} nowBarHeight={barHeight}start={start} />
-        </div>
-      )}
+    <Animation/>
+    
     </div>
+
   );
 };
 
