@@ -16,7 +16,7 @@ const Gem: React.FC<GemProps> = ({ top, left, hit }) => {
       className="absolute"
       style={{
         top: top,
-        left: left,
+        left: `${left}%`,
         width: '50px',  // Width of the gem
         height: '50px', // Height of the gem
         backgroundColor: hit ? 'gray' : 'blue', // Change color if hit

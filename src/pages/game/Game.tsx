@@ -45,7 +45,7 @@ const Game: React.FC = () => {
     //   )}
     // </div>
     <div>
-    <Animation/>
+    <Animation videoUrl="/easy_pattern.mp4" leftKey="f" rightKey="j"/>
     
     </div>
 
