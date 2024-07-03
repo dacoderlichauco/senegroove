@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
+import Gem from './Gem';  // Import the Gem component
 
 interface GemData {
   TIME: string;
@@ -13,13 +14,14 @@ const Animation: React.FC = () => {
   const delta_t = 5;
   const width = '500px';  // Desired width
   const height = '400px'; // Desired height maintaining the 16:9 aspect ratio
-  const gemSize = y_nb;     // Size of the gem
+
   // State to hold the positions of the gems, the JSON data, and the hit count
   const [gemPositions, setGemPositions] = useState<number[]>([]);
   const [gemData, setGemData] = useState<GemData[]>([]);
   const [hitCount, setHitCount] = useState(0);
+  const [hitGems, setHitGems] = useState<boolean[]>([]);
   const videoRef = useRef<ReactPlayer>(null);
-  const hitWindow = 0.5; // Time window for detecting hits, e.g., 0.5 seconds
+  const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
 
   // Function to fetch the JSON data
   useEffect(() => {
@@ -28,6 +30,7 @@ const Animation: React.FC = () => {
         const response = await fetch('/fandj.json'); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
+        setHitGems(new Array(data.length).fill(false));
       } catch (error) {
         console.error('Error fetching JSON data:', error);
       }
@@ -59,26 +62,19 @@ const Animation: React.FC = () => {
 
   // Function to handle key press
   const handleKeyPress = (event: KeyboardEvent) => {
-    console.log('Key pressed:', event.key); // Debugging line
-
-    if (event.key === 'j') {
-      console.log('Detected key "j"'); // Debugging line
-    }
-
     if (event.key === 'j' && videoRef.current) {
       const currentTime = videoRef.current.getCurrentTime();
-      console.log('Key j pressed at video time:', currentTime); // Debugging line
-      const isHit = gemData.some(entry => {
+      gemData.forEach((entry, index) => {
         const gemTime = parseFloat(entry.TIME);
-        const hit = Math.abs(gemTime - currentTime) <= hitWindow;
-        if (hit) {
-          console.log('Hit detected for gem at time:', gemTime); // Debugging line
+        if (!hitGems[index] && Math.abs(gemTime - currentTime) <= hitWindow) {
+          setHitGems(prevHitGems => {
+            const newHitGems = [...prevHitGems];
+            newHitGems[index] = true;
+            return newHitGems;
+          });
+          setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
         }
-        return hit;
       });
-      if (isHit) {
-        setHitCount(prevCount => prevCount + 1);
-      }
     }
   };
 
@@ -87,7 +83,7 @@ const Animation: React.FC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [gemData]); // Re-adding dependencies here
+  }, [gemData, hitGems]); // Re-adding dependencies here
 
   return (
     <div>
@@ -96,8 +92,8 @@ const Animation: React.FC = () => {
           position: 'absolute',
           top: 0,
           left: 0,
-          width: width,
-          height: height,
+          width: '100vw',
+          height: '100vh',
           overflow: 'hidden',
         }}
       >
@@ -105,23 +101,18 @@ const Animation: React.FC = () => {
           ref={videoRef}
           url="/easy_pattern.mp4"
           controls={true}
-          width="100%"
-          height="100%"
+          width="100vw"
+          height="100vh"
         />
       </div>
-      <div className="absolute" style={{ top: delta_y - 50, left: 0, width: window.innerWidth, height: 50, backgroundColor: 'yellow' }} />
+      <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: window.innerWidth, height: 50, backgroundColor: 'yellow' }} />
       {gemPositions.map((pos, index) => (
-        pos <= window.innerHeight && ( // Only render gems within the visible range
-          <div
+        pos <= window.innerHeight && (
+          <Gem
             key={index}
-            className="absolute"
-            style={{
-              top: pos,
-              left: x_position,
-              width: '50px',  // Width of the gem
-              height: '50px', // Height of the gem
-              backgroundColor: 'blue', // Color of the gem
-            }}
+            top={pos}
+            left={x_position}
+            hit={hitGems[index]}
           />
         )
       ))}

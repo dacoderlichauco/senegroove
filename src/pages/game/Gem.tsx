@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 interface GemProps {
   top: number;
   left: number;
-  time: number;
-  currentTime: number;
-  hitWindow: number;
-  onHit: () => void;
+  hit: boolean;
 }
 
-const Gem: React.FC<GemProps> = ({ top, left, time, currentTime, hitWindow, onHit }) => {
-  const [hit, setHit] = useState(false);
-
-  useEffect(() => {
-    if (!hit && Math.abs(time - currentTime) <= hitWindow) {
-      setHit(true);
-      onHit();
-    }
-  }, [currentTime, hit, hitWindow, onHit, time]);
-
+const Gem: React.FC<GemProps> = ({ top, left, hit }) => {
   if (top > window.innerHeight) {
     return null; // Don't render the gem if it's out of view
   }
