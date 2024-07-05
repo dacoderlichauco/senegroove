@@ -1,27 +1,27 @@
 import React from 'react';
 
 interface GemProps {
-  top: number;
+  label: string;
   left: number;
+  top: number;
   hit: boolean;
 }
 
-const Gem: React.FC<GemProps> = ({ top, left, hit }) => {
-  if (top > window.innerHeight) {
-    return null; // Don't render the gem if it's out of view
-  }
+const Gem: React.FC<GemProps> = ({ label, left, top, hit }) => {
+  const isNumber = !isNaN(Number(label));
 
   return (
     <div
-      className="absolute"
+      className={`absolute text-white font-bold text-center flex items-center justify-center rounded-full ${hit ? 'bg-green-500' : 'bg-blue-500'}`}
       style={{
-        top: top,
+        width: '50px',
+        height: '50px',
         left: `${left}%`,
-        width: '50px',  // Width of the gem
-        height: '50px', // Height of the gem
-        backgroundColor: hit ? 'gray' : 'blue', // Change color if hit
+        top: `${top}px`,
       }}
-    />
+    >
+      {isNumber ? label : ''}
+    </div>
   );
 };
 

@@ -24,6 +24,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const [gemPositions, setGemPositions] = useState<number[]>([]);
   const [gemData, setGemData] = useState<GemData[]>([]);
   const [hitCount, setHitCount] = useState(0);
+  const [missCount, setMissCount] = useState(0);  // State to hold the miss count
   const [hitGems, setHitGems] = useState<boolean[]>([]);
   const videoRef = useRef<ReactPlayer>(null);
   const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
@@ -32,7 +33,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/fandj.json"); // Adjust the path accordingly
+        const response = await fetch("/basic_rythm.json"); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
         setHitGems(new Array(data.length).fill(false));
@@ -70,6 +71,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     const isHitKey = event.key === leftKey || event.key === rightKey;
     if (isHitKey && videoRef.current) {
       const currentTime = videoRef.current.getCurrentTime();
+      let hit = false;
       gemData.forEach((entry, index) => {
         const gemTime = parseFloat(entry.TIME);
         const gemLabel = entry.LABEL.toLowerCase();
@@ -81,8 +83,12 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
             return newHitGems;
           });
           setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
+          hit = true;
         }
       });
+      if (!hit) {
+        setMissCount(prevCount => prevCount + 1);
+      }
     }
   };
 
@@ -128,6 +134,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
             top={pos}
             left={getGemXPosition(gemData[index].LABEL)} // Determine x position based on label
             hit={hitGems[index]}
+            label={gemData[index].LABEL} // Pass the label to the Gem component
           />
         )
       ))}
@@ -141,6 +148,17 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
         }}
       >
         Hits: {hitCount}
+      </div>
+      <div
+        className="absolute"
+        style={{
+          top: 50,
+          right: 10,
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Misses: {missCount}
       </div>
     </div>
   );
