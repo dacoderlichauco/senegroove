@@ -25,7 +25,9 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const [gemData, setGemData] = useState<GemData[]>([]);
   const [hitCount, setHitCount] = useState(0);
   const [missCount, setMissCount] = useState(0);  // State to hold the miss count
+  const [unhitCount, setUnhitCount] = useState(0);  // State to hold the unhit count
   const [hitGems, setHitGems] = useState<boolean[]>([]);
+  const [checkedGems, setCheckedGems] = useState<boolean[]>([]); // Track gems that have been checked for unhit
   const videoRef = useRef<ReactPlayer>(null);
   const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
 
@@ -33,10 +35,11 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/basic_rythm.json"); // Adjust the path accordingly
+        const response = await fetch("/fandj.json"); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
         setHitGems(new Array(data.length).fill(false));
+        setCheckedGems(new Array(data.length).fill(false)); // Initialize checkedGems array
       } catch (error) {
         console.error('Error fetching JSON data:', error);
       }
@@ -57,6 +60,19 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     if (videoRef.current) {
       const currentTime = videoRef.current.getCurrentTime();
       updateGemPositions(currentTime);
+
+      // Check for gems that have passed the hit window without being hit
+      gemData.forEach((entry, index) => {
+        const gemTime = parseFloat(entry.TIME);
+        if (!hitGems[index] && !checkedGems[index] && currentTime > gemTime + hitWindow) {
+          setCheckedGems(prevCheckedGems => {
+            const newCheckedGems = [...prevCheckedGems];
+            newCheckedGems[index] = true;
+            return newCheckedGems;
+          });
+          setUnhitCount(prevCount => prevCount + 1);
+        }
+      });
     }
     requestAnimationFrame(animate);
   };
@@ -159,6 +175,17 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
         }}
       >
         Misses: {missCount}
+      </div>
+      <div
+        className="absolute"
+        style={{
+          top: 90,
+          right: 10,
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Unhit: {unhitCount}
       </div>
     </div>
   );
