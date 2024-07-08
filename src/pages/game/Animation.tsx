@@ -37,7 +37,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/fandj.json'); // Adjust the path accordingly
+        const response = await fetch('/basic_rythm.json'); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
         setHitGems(new Array(data.length).fill(false));
