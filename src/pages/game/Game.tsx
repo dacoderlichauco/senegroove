@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Animation from "./Animation";
-
+import ReactPlayer from 'react-player';
 
 // type JsonEntry = {
 //   TIME: string;
@@ -44,7 +44,13 @@ const Game: React.FC = () => {
     //   )}
     // </div>
     <div>
-    <Animation videoUrl="/easy_pattern.mp4" leftKey="f" rightKey="j"/>
+    {/* <ReactPlayer
+    url="/video_01.mp4"
+    className="z-50"
+    
+    /> */}
+      
+    <Animation videoUrl="/easy_pattern.mp4" leftKey="f" rightKey="j" />
     
     </div>
 

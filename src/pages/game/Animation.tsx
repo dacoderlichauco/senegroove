@@ -17,8 +17,8 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const delta_y = window.innerHeight;
   const y_nb = 50; // Now bar position at the top of the screen
   const delta_t = 5;
-  // const width = '100vw';  // Desired width to take up the whole viewport width
-  // const height = '100vh'; // Desired height to take up the whole viewport height
+  const width = '100vw';  // Desired width to take up the whole viewport width
+  const height = '100vh'; // Desired height to take up the whole viewport height
 
   // State to hold the positions of the gems, the JSON data, and the hit count
   const [gemPositions, setGemPositions] = useState<number[]>([]);
@@ -32,11 +32,13 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const videoRef = useRef<ReactPlayer>(null);
   const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
 
+  const keyStates: { [key: string]: boolean } = {}; // Object to track key states
+
   // Function to fetch the JSON data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/basic_rythm.json'); // Adjust the path accordingly
+        const response = await fetch('/fandj.json'); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
         setHitGems(new Array(data.length).fill(false));
@@ -71,41 +73,45 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
 
   // Function to handle key press
   const handleKeyPress = (event: KeyboardEvent) => {
-    let isBadHit = true;
-    if (event.key === leftKey || event.key === rightKey) {
-      if (event.key === leftKey) {
-        setLeftKeyActive(true);
-      }
-      if (event.key === rightKey) {
-        setRightKeyActive(true);
-      }
-      if (videoRef.current) {
-        const currentTime = videoRef.current.getCurrentTime();
-        gemData.forEach((entry, index) => {
-          const gemTime = parseFloat(entry.TIME);
-          const gemLabel = entry.LABEL.toLowerCase();
-          const isMatchingLabel = (gemLabel === 'j' && event.key === rightKey) || (gemLabel === 'f' && event.key === leftKey);
-          if (Math.abs(gemTime - currentTime) <= hitWindow && isMatchingLabel) {
-            if (!hitGems[index]) {
-              setHitGems(prevHitGems => {
-                const newHitGems = [...prevHitGems];
-                newHitGems[index] = true;
-                return newHitGems;
-              });
-              setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
-              isBadHit = false;
+    if (!keyStates[event.key]) { // Only process if the key was not already pressed
+      keyStates[event.key] = true;
+      let isBadHit = true;
+      if (event.key === leftKey || event.key === rightKey) {
+        if (event.key === leftKey) {
+          setLeftKeyActive(true);
+        }
+        if (event.key === rightKey) {
+          setRightKeyActive(true);
+        }
+        if (videoRef.current) {
+          const currentTime = videoRef.current.getCurrentTime();
+          gemData.forEach((entry, index) => {
+            const gemTime = parseFloat(entry.TIME);
+            const gemLabel = entry.LABEL.toLowerCase();
+            const isMatchingLabel = (gemLabel === 'j' && event.key === rightKey) || (gemLabel === 'f' && event.key === leftKey);
+            if (Math.abs(gemTime - currentTime) <= hitWindow && isMatchingLabel) {
+              if (!hitGems[index]) {
+                setHitGems(prevHitGems => {
+                  const newHitGems = [...prevHitGems];
+                  newHitGems[index] = true;
+                  return newHitGems;
+                });
+                setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
+                isBadHit = false;
+              }
             }
-          }
-        });
+          });
+        }
       }
-    }
-    if (isBadHit) {
-      setBadHitCount(prevCount => prevCount + 1);
+      if (isBadHit) {
+        setBadHitCount(prevCount => prevCount + 1);
+      }
     }
   };
 
   // Function to handle key release
   const handleKeyRelease = (event: KeyboardEvent) => {
+    keyStates[event.key] = false; // Reset key state
     if (event.key === leftKey) {
       setLeftKeyActive(false);
     }
@@ -136,7 +142,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: 'black', height: '100vh', width: '100vw' }}>
       <button
         style={{
           position: 'absolute',
@@ -160,7 +166,6 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           width: '100vw', // Updated width to take up whole viewport
           height: '100vh', // Updated height to take up whole viewport
           overflow: 'hidden',
-          backgroundColor: 'black',
         }}
       >
         <ReactPlayer
@@ -168,8 +173,8 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           url={videoUrl} // Use the videoUrl prop
           controls={false}
           playing={isPlaying}
-          width="auto" // Updated width to take up whole viewport
-          height="auto" // Updated height to take up whole viewport
+          width="100vw" // Updated width to take up whole viewport
+          height="100vh" // Updated height to take up whole viewport
         />
       </div>
       <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: '50%', height: 50, backgroundColor: leftKeyActive ? '#B3B300' : 'yellow' }} />

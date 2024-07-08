@@ -12,7 +12,7 @@ const Gem: React.FC<GemProps> = ({ label, left, top, hit }) => {
 
   return (
     <div
-      className={`absolute text-white font-bold text-center flex items-center justify-center rounded-full ${hit ? 'bg-green-500' : 'bg-blue-500'}`}
+      className={`absolute text-black font-bold text-center flex items-center justify-center rounded-full ${hit ? 'bg-green-500' : 'bg-blue-100'}`}
       style={{
         width: '50px',
         height: '50px',
