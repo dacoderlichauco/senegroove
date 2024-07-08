@@ -24,10 +24,11 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const [gemPositions, setGemPositions] = useState<number[]>([]);
   const [gemData, setGemData] = useState<GemData[]>([]);
   const [hitCount, setHitCount] = useState(0);
+  const [badHitCount, setBadHitCount] = useState(0); // State for bad hits
   const [hitGems, setHitGems] = useState<boolean[]>([]);
   const [leftKeyActive, setLeftKeyActive] = useState(false);
   const [rightKeyActive, setRightKeyActive] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false); // State to control video playback
   const videoRef = useRef<ReactPlayer>(null);
   const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
 
@@ -70,6 +71,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
 
   // Function to handle key press
   const handleKeyPress = (event: KeyboardEvent) => {
+    let isBadHit = true;
     if (event.key === leftKey || event.key === rightKey) {
       if (event.key === leftKey) {
         setLeftKeyActive(true);
@@ -83,16 +85,22 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           const gemTime = parseFloat(entry.TIME);
           const gemLabel = entry.LABEL.toLowerCase();
           const isMatchingLabel = (gemLabel === 'j' && event.key === rightKey) || (gemLabel === 'f' && event.key === leftKey);
-          if (!hitGems[index] && Math.abs(gemTime - currentTime) <= hitWindow && isMatchingLabel) {
-            setHitGems(prevHitGems => {
-              const newHitGems = [...prevHitGems];
-              newHitGems[index] = true;
-              return newHitGems;
-            });
-            setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
+          if (Math.abs(gemTime - currentTime) <= hitWindow && isMatchingLabel) {
+            if (!hitGems[index]) {
+              setHitGems(prevHitGems => {
+                const newHitGems = [...prevHitGems];
+                newHitGems[index] = true;
+                return newHitGems;
+              });
+              setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
+              isBadHit = false;
+            }
           }
         });
       }
+    }
+    if (isBadHit) {
+      setBadHitCount(prevCount => prevCount + 1);
     }
   };
 
@@ -122,6 +130,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     return 50; // Default to center
   };
 
+  // Function to toggle video playback
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
@@ -185,6 +194,17 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
         }}
       >
         Hits: {hitCount}
+      </div>
+      <div
+        className="absolute"
+        style={{
+          top: 40,
+          right: 10,
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Bad Hits: {badHitCount}
       </div>
     </div>
   );
