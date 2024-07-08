@@ -24,10 +24,10 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const [gemPositions, setGemPositions] = useState<number[]>([]);
   const [gemData, setGemData] = useState<GemData[]>([]);
   const [hitCount, setHitCount] = useState(0);
-  const [missCount, setMissCount] = useState(0);  // State to hold the miss count
-  const [unhitCount, setUnhitCount] = useState(0);  // State to hold the unhit count
   const [hitGems, setHitGems] = useState<boolean[]>([]);
-  const [checkedGems, setCheckedGems] = useState<boolean[]>([]); // Track gems that have been checked for unhit
+  const [leftKeyActive, setLeftKeyActive] = useState(false);
+  const [rightKeyActive, setRightKeyActive] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<ReactPlayer>(null);
   const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
 
@@ -35,11 +35,10 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/fandj.json"); // Adjust the path accordingly
+        const response = await fetch('/basic_rythm.json'); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
         setHitGems(new Array(data.length).fill(false));
-        setCheckedGems(new Array(data.length).fill(false)); // Initialize checkedGems array
       } catch (error) {
         console.error('Error fetching JSON data:', error);
       }
@@ -60,19 +59,6 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     if (videoRef.current) {
       const currentTime = videoRef.current.getCurrentTime();
       updateGemPositions(currentTime);
-
-      // Check for gems that have passed the hit window without being hit
-      gemData.forEach((entry, index) => {
-        const gemTime = parseFloat(entry.TIME);
-        if (!hitGems[index] && !checkedGems[index] && currentTime > gemTime + hitWindow) {
-          setCheckedGems(prevCheckedGems => {
-            const newCheckedGems = [...prevCheckedGems];
-            newCheckedGems[index] = true;
-            return newCheckedGems;
-          });
-          setUnhitCount(prevCount => prevCount + 1);
-        }
-      });
     }
     requestAnimationFrame(animate);
   };
@@ -84,34 +70,48 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
 
   // Function to handle key press
   const handleKeyPress = (event: KeyboardEvent) => {
-    const isHitKey = event.key === leftKey || event.key === rightKey;
-    if (isHitKey && videoRef.current) {
-      const currentTime = videoRef.current.getCurrentTime();
-      let hit = false;
-      gemData.forEach((entry, index) => {
-        const gemTime = parseFloat(entry.TIME);
-        const gemLabel = entry.LABEL.toLowerCase();
-        const isMatchingLabel = (gemLabel === 'j' && event.key === rightKey) || (gemLabel === 'f' && event.key === leftKey);
-        if (!hitGems[index] && Math.abs(gemTime - currentTime) <= hitWindow && isMatchingLabel) {
-          setHitGems(prevHitGems => {
-            const newHitGems = [...prevHitGems];
-            newHitGems[index] = true;
-            return newHitGems;
-          });
-          setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
-          hit = true;
-        }
-      });
-      if (!hit) {
-        setMissCount(prevCount => prevCount + 1);
+    if (event.key === leftKey || event.key === rightKey) {
+      if (event.key === leftKey) {
+        setLeftKeyActive(true);
       }
+      if (event.key === rightKey) {
+        setRightKeyActive(true);
+      }
+      if (videoRef.current) {
+        const currentTime = videoRef.current.getCurrentTime();
+        gemData.forEach((entry, index) => {
+          const gemTime = parseFloat(entry.TIME);
+          const gemLabel = entry.LABEL.toLowerCase();
+          const isMatchingLabel = (gemLabel === 'j' && event.key === rightKey) || (gemLabel === 'f' && event.key === leftKey);
+          if (!hitGems[index] && Math.abs(gemTime - currentTime) <= hitWindow && isMatchingLabel) {
+            setHitGems(prevHitGems => {
+              const newHitGems = [...prevHitGems];
+              newHitGems[index] = true;
+              return newHitGems;
+            });
+            setHitCount(prevCount => Math.min(prevCount + 1, gemData.length));
+          }
+        });
+      }
+    }
+  };
+
+  // Function to handle key release
+  const handleKeyRelease = (event: KeyboardEvent) => {
+    if (event.key === leftKey) {
+      setLeftKeyActive(false);
+    }
+    if (event.key === rightKey) {
+      setRightKeyActive(false);
     }
   };
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('keyup', handleKeyRelease);
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('keyup', handleKeyRelease);
     };
   }, [gemData, hitGems, leftKey, rightKey]); // Re-adding dependencies here
 
@@ -122,8 +122,27 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     return 50; // Default to center
   };
 
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div>
+      <button
+        style={{
+          position: 'absolute',
+          top: 10,
+          left: 10,
+          zIndex: 1000,
+          padding: '10px 20px',
+          backgroundColor: 'lightgray',
+          border: 'none',
+          cursor: 'pointer'
+        }}
+        onClick={togglePlay}
+      >
+        {isPlaying ? 'Pause' : 'Play'}
+      </button>
       <div
         style={{
           position: 'absolute',
@@ -137,12 +156,14 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
         <ReactPlayer
           ref={videoRef}
           url={videoUrl} // Use the videoUrl prop
-          controls={true}
+          controls={false}
+          playing={isPlaying}
           width="100vw" // Updated width to take up whole viewport
-          height="50vh" // Updated height to take up whole viewport
+          height="100vh" // Updated height to take up whole viewport
         />
       </div>
-      <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: window.innerWidth, height: 50, backgroundColor: 'yellow' }} />
+      <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: '50%', height: 50, backgroundColor: leftKeyActive ? '#B3B300' : 'yellow' }} />
+      <div className="absolute" style={{ top: delta_y - y_nb, left: '50%', width: '50%', height: 50, backgroundColor: rightKeyActive ? '#B3B300' : 'yellow' }} />
       {gemPositions.map((pos, index) => (
         pos <= window.innerHeight && (
           <Gem
@@ -150,7 +171,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
             top={pos}
             left={getGemXPosition(gemData[index].LABEL)} // Determine x position based on label
             hit={hitGems[index]}
-            label={gemData[index].LABEL} // Pass the label to the Gem component
+            label={gemData[index].LABEL} // Pass the label prop
           />
         )
       ))}
@@ -164,28 +185,6 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
         }}
       >
         Hits: {hitCount}
-      </div>
-      <div
-        className="absolute"
-        style={{
-          top: 50,
-          right: 10,
-          fontSize: '24px',
-          fontWeight: 'bold',
-        }}
-      >
-        Misses: {missCount}
-      </div>
-      <div
-        className="absolute"
-        style={{
-          top: 90,
-          right: 10,
-          fontSize: '24px',
-          fontWeight: 'bold',
-        }}
-      >
-        Unhit: {unhitCount}
       </div>
     </div>
   );
