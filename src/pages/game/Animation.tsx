@@ -17,8 +17,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const delta_y = window.innerHeight;
   const y_nb = 50; // Now bar position at the top of the screen
   const delta_t = 5;
-  const width = '100vw';  // Desired width to take up the whole viewport width
-  const height = '100vh'; // Desired height to take up the whole viewport height
+
 
   // State to hold the positions of the gems, the JSON data, and the hit count
   const [gemPositions, setGemPositions] = useState<number[]>([]);
