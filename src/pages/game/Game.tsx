@@ -1,38 +1,37 @@
 import React, { useEffect, useState } from "react";
-import Lane from "./Lane";
 import Animation from "./Animation";
-import ReactPlayer from 'react-player';
 
-type JsonEntry = {
-  TIME: string;
-  LABEL: string;
-};
-let barHeight = 60;
+
+// type JsonEntry = {
+//   TIME: string;
+//   LABEL: string;
+// };
+
 
 const Game: React.FC = () => {
-  const [countdownArray, setCountdownArray] = useState<JsonEntry[]>([]);
-  const [jArray, setJArray] = useState<JsonEntry[]>([]);
-  const [fArray, setFArray] = useState<JsonEntry[]>([]);
-  const [start, setStart] = useState(false);
+  // const [countdownArray, setCountdownArray] = useState<JsonEntry[]>([]);
+  // const [jArray, setJArray] = useState<JsonEntry[]>([]);
+  // const [fArray, setFArray] = useState<JsonEntry[]>([]);
+  // const [start, setStart] = useState(false);
 
-  useEffect(() => {
-    fetch('/fandj.json')
-      .then((response) => response.json())
-      .then((data: JsonEntry[]) => {
-        const countdown = data.filter(entry => /\d/.test(entry.LABEL));
-        const j_arr = data.filter(entry => entry.LABEL === 'j');
-        const f_arr = data.filter(entry => entry.LABEL === 'f');
+  // useEffect(() => {
+  //   fetch('/fandj.json')
+  //     .then((response) => response.json())
+  //     .then((data: JsonEntry[]) => {
+  //       const countdown = data.filter(entry => /\d/.test(entry.LABEL));
+  //       const j_arr = data.filter(entry => entry.LABEL === 'j');
+  //       const f_arr = data.filter(entry => entry.LABEL === 'f');
 
-        setCountdownArray(countdown);
-        setJArray(j_arr);
-        setFArray(f_arr);
-      })
-      .catch((error) => console.error('Error loading JSON:', error));
-  }, []);
+  //       setCountdownArray(countdown);
+  //       setJArray(j_arr);
+  //       setFArray(f_arr);
+  //     })
+  //     .catch((error) => console.error('Error loading JSON:', error));
+  // }, []);
 
-  const handleStart = () => {
-    setStart(true);
-  };
+  // const handleStart = () => {
+  //   setStart(true);
+  // };
 
   return (
     // <div>

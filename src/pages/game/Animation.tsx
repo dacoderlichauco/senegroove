@@ -17,8 +17,8 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const delta_y = window.innerHeight;
   const y_nb = 50; // Now bar position at the top of the screen
   const delta_t = 5;
-  const width = '100vw';  // Desired width to take up the whole viewport width
-  const height = '100vh'; // Desired height to take up the whole viewport height
+  // const width = '100vw';  // Desired width to take up the whole viewport width
+  // const height = '100vh'; // Desired height to take up the whole viewport height
 
   // State to hold the positions of the gems, the JSON data, and the hit count
   const [gemPositions, setGemPositions] = useState<number[]>([]);
@@ -160,6 +160,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           width: '100vw', // Updated width to take up whole viewport
           height: '100vh', // Updated height to take up whole viewport
           overflow: 'hidden',
+          backgroundColor: 'black',
         }}
       >
         <ReactPlayer
@@ -167,8 +168,8 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           url={videoUrl} // Use the videoUrl prop
           controls={false}
           playing={isPlaying}
-          width="100vw" // Updated width to take up whole viewport
-          height="100vh" // Updated height to take up whole viewport
+          width="auto" // Updated width to take up whole viewport
+          height="auto" // Updated height to take up whole viewport
         />
       </div>
       <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: '50%', height: 50, backgroundColor: leftKeyActive ? '#B3B300' : 'yellow' }} />
@@ -191,6 +192,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           right: 10,
           fontSize: '24px',
           fontWeight: 'bold',
+          color: 'white',
         }}
       >
         Hits: {hitCount}
@@ -202,6 +204,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           right: 10,
           fontSize: '24px',
           fontWeight: 'bold',
+          color: 'white',
         }}
       >
         Bad Hits: {badHitCount}
