@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Animation from "./Animation";
 import ReactPlayer from 'react-player';
+
 
 // type JsonEntry = {
 //   TIME: string;
@@ -32,6 +33,24 @@ const Game: React.FC = () => {
   // const handleStart = () => {
   //   setStart(true);
   // };
+  const player1Ref = useRef<ReactPlayer | null>(null);
+  const player2Ref = useRef<ReactPlayer | null>(null);
+  const player3Ref = useRef<ReactPlayer | null>(null);
+
+  const handlePlayAll = () => {
+    if (player1Ref.current) {
+      player1Ref.current.seekTo(0); // Reset to start
+      player1Ref.current.getInternalPlayer().play();
+    }
+    if (player2Ref.current) {
+      player2Ref.current.seekTo(0); // Reset to start
+      player2Ref.current.getInternalPlayer().play();
+    }
+    if (player3Ref.current) {
+      player3Ref.current.seekTo(0); // Reset to start
+      player3Ref.current.getInternalPlayer().play();
+    }
+  };
 
   return (
     // <div>
@@ -44,13 +63,27 @@ const Game: React.FC = () => {
     //   )}
     // </div>
     <div>
-    {/* <ReactPlayer
-    url="/video_01.mp4"
-    className="z-50"
-    
-    /> */}
-      
-    <Animation videoUrl="/video_01.mp4" leftKey="f" rightKey="j" />
+
+<div>
+      <button onClick={handlePlayAll}>Start All Videos</button>
+      <div>
+        <ReactPlayer
+          ref={player1Ref}
+          url="/video_01.mp4"
+          controls={true}
+        />
+        <ReactPlayer
+          ref={player2Ref}
+          url="/easy_pattern.mp4"
+          controls={true}
+        />
+        <ReactPlayer
+          ref={player3Ref}
+          url="/video_04.mp4"
+          controls={true}
+        />
+      </div>
+    </div>
     
     </div>
 
