@@ -14,6 +14,6 @@ def csv_to_json(csv_file_path, json_file_path):
         json.dump(data, json_file, indent=4)
 
 if __name__ == "__main__":
-    csv_file_path = 'basic_rythm.csv'
-    json_file_path = 'basic_rythm.json'
+    csv_file_path = 'video_04.csv'
+    json_file_path = 'video_04.json'
     csv_to_json(csv_file_path, json_file_path)

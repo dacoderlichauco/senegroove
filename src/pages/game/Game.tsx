@@ -50,7 +50,7 @@ const Game: React.FC = () => {
     
     /> */}
       
-    <Animation videoUrl="/easy_pattern.mp4" leftKey="f" rightKey="j" />
+    <Animation videoUrl="/video_01.mp4" leftKey="f" rightKey="j" />
     
     </div>
 
