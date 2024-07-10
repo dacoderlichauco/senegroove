@@ -62,10 +62,10 @@ const Game: React.FC = () => {
     //     </div>
     //   )}
     // </div>
-    <div>
+    
 
 <div>
-      <button onClick={handlePlayAll}>Start All Videos</button>
+      {/* <button onClick={handlePlayAll}>Start All Videos</button>
       <div>
         <ReactPlayer
           ref={player1Ref}
@@ -83,8 +83,8 @@ const Game: React.FC = () => {
           controls={true}
         />
       </div>
-    </div>
-    
+    </div> */}
+    <Animation videoUrl="/Timeline 1.mov" leftKey="f" rightKey="j"/>
     </div>
 
   );

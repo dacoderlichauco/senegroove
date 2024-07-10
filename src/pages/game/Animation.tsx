@@ -16,7 +16,7 @@ interface AnimationProps {
 const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) => {
   const delta_y = window.innerHeight;
   const y_nb = 50; // Now bar position at the top of the screen
-  const delta_t = 1;
+  const delta_t = 5;
 
 
   // State to hold the positions of the gems, the JSON data, and the hit count
@@ -29,7 +29,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const [rightKeyActive, setRightKeyActive] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false); // State to control video playback
   const videoRef = useRef<ReactPlayer>(null);
-  const hitWindow = 0.05; // Time window for detecting hits, e.g., 0.5 seconds
+  const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
 
   const keyStates: { [key: string]: boolean } = {}; // Object to track key states
 
@@ -37,7 +37,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/video_01.json'); // Adjust the path accordingly
+        const response = await fetch('/basic_rythm.json'); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
         setHitGems(new Array(data.length).fill(false));
