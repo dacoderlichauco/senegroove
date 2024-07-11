@@ -1,0 +1,662 @@
+[
+    {
+        "TIME": "2.419500000",
+        "LABEL": "f"
+    },
+    {
+        "TIME": "2.989583333",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "3.549375000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "3.956250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "4.116250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "4.388062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "4.856812500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "4.971750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "5.240250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "5.507062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "5.811187500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "6.219187500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "6.371812500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "6.637312500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "7.069687500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "7.184812500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "7.452000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "7.715437500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "8.003625000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "8.383312500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "8.533875000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "8.800312500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "9.224250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "9.329250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "9.605062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "9.875062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "10.157062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "10.562062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "10.708312500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "10.959375000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "11.412750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "11.522625000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "11.793750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "12.054000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "12.335437500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "12.737625000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "12.887062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "13.150687500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "13.599750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "13.705500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "13.973812500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "14.243437500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "14.522625000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "14.921062500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "15.071437500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "15.337500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "15.772125000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "15.883687500",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "16.156500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "16.430833333",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "16.720666667",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "17.122833333",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "17.273500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "17.546333333",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "18.015000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "18.122666667",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "18.396000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "18.650500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "18.938500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "19.329333333",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "19.475166667",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "19.733000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "20.174000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "20.289500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "20.556666667",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "20.823833333",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "21.110833333",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "21.511000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "21.659166667",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "21.927750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "22.384500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "22.479000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "22.749000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "23.010000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "23.297250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "23.685000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "23.840250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "24.112500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "24.570000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "24.668250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "24.926250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "25.204500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "25.493250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "25.881750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "26.034000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "26.309250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "26.748000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "26.855250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "27.127500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "27.386250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "27.675750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "28.061250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "28.220250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "28.489500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "28.909500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "29.016750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "29.294250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "29.565000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "29.845500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "30.238500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "30.393000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "30.669000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "31.092750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "31.206000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "31.477500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "31.752750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "32.032500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "32.439000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "32.595000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "32.874750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "33.298500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "33.422250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "33.701250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "33.969000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "34.261500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "34.662750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "34.809750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "35.070000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "35.490750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "35.605500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "35.886000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "36.153750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "36.447750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "36.843000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "36.997500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "37.272750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "37.697250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "37.817250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "38.085750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "38.350500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "38.630250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "39.028500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "39.183750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "39.460500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "39.885750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "40.014000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "40.290000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "40.554000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "40.850250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "41.244750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "41.394000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "41.673750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "42.096750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "42.225750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "42.497250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "42.765000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "43.047750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "43.449000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "43.606500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "43.873500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "44.302500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "44.418750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "44.701500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "44.967750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "45.255000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "45.653250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "45.818250000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "46.077750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "46.539750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "46.650000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "46.926750000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "47.178000000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "47.482500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "47.857500000",
+        "LABEL": "New Point"
+    },
+    {
+        "TIME": "48.033000000",
+        "LABEL": "New Point"
+    }
+]
