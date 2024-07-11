@@ -130,8 +130,8 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
 
   // Function to determine gem x position based on label
   const getGemXPosition = (label: string) => {
-    if (label.toLowerCase() === 'j') return 80; // 80% from the left
-    if (label.toLowerCase() === 'f') return 20; // 20% from the left
+    if (label.toLowerCase() === 'j') return 75; // 80% from the left
+    if (label.toLowerCase() === 'f') return 35; // 20% from the left
     return 50; // Default to center
   };
 
