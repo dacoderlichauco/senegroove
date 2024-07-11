@@ -18,7 +18,6 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const y_nb = 50; // Now bar position at the top of the screen
   const delta_t = 5;
 
-
   // State to hold the positions of the gems, the JSON data, and the hit count
   const [gemPositions, setGemPositions] = useState<number[]>([]);
   const [gemData, setGemData] = useState<GemData[]>([]);
@@ -28,6 +27,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   const [leftKeyActive, setLeftKeyActive] = useState(false);
   const [rightKeyActive, setRightKeyActive] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false); // State to control video playback
+  const [showScore, setShowScore] = useState(false); // State to show the score
   const videoRef = useRef<ReactPlayer>(null);
   const hitWindow = 0.25; // Time window for detecting hits, e.g., 0.5 seconds
 
@@ -68,7 +68,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   useEffect(() => {
     // Start the animation loop
     requestAnimationFrame(animate);
-  }, [gemData]); // Start the loop after gem data is loaded
+  }, [gemData]); 
 
   // Function to handle key press
   const handleKeyPress = (event: KeyboardEvent) => {
@@ -138,7 +138,27 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   // Function to toggle video playback
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
+    if (!isPlaying) {
+      setShowScore(false); // Hide score when starting playback
+    }
   };
+
+  const handleVideoEnd = () => {
+    setIsPlaying(false);
+    setShowScore(true);
+  };
+
+  const handleRestart = () => {
+    setHitCount(0);
+    setBadHitCount(0);
+    setHitGems(new Array(gemData.length).fill(false));
+    setGemPositions([]);
+    setShowScore(false);
+    videoRef.current?.seekTo(0); // Restart the video
+    setIsPlaying(true);
+  };
+
+  const unhitGemsCount = hitGems.filter(hit => !hit).length;
 
   return (
     <div style={{ backgroundColor: 'black', height: '100vh', width: '100vw' }}>
@@ -174,6 +194,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           playing={isPlaying}
           width="100vw" // Updated width to take up whole viewport
           height="100vh" // Updated height to take up whole viewport
+          onEnded={handleVideoEnd}
         />
       </div>
       <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: '50%', height: 50, backgroundColor: leftKeyActive ? '#B3B300' : 'yellow' }} />
@@ -189,30 +210,66 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           />
         )
       ))}
-      <div
-        className="absolute"
-        style={{
-          top: 10,
-          right: 10,
-          fontSize: '24px',
-          fontWeight: 'bold',
-          color: 'white',
-        }}
-      >
-        Hits: {hitCount}
-      </div>
-      <div
-        className="absolute"
-        style={{
-          top: 40,
-          right: 10,
-          fontSize: '24px',
-          fontWeight: 'bold',
-          color: 'white',
-        }}
-      >
-        Bad Hits: {badHitCount}
-      </div>
+      {isPlaying && (
+        <>
+          <div
+            className="absolute"
+            style={{
+              top: 10,
+              right: 10,
+              fontSize: '24px',
+              fontWeight: 'bold',
+              color: 'white',
+            }}
+          >
+            Hits: {hitCount}
+          </div>
+          <div
+            className="absolute"
+            style={{
+              top: 40,
+              right: 10,
+              fontSize: '24px',
+              fontWeight: 'bold',
+              color: 'white',
+            }}
+          >
+            Bad Hits: {badHitCount}
+          </div>
+        </>
+      )}
+      {showScore && (
+        <div
+          className="absolute"
+          style={{
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            padding: '20px',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            textAlign: 'center',
+            borderRadius: '10px',
+          }}
+        >
+          <h2>Total Score</h2>
+          <p>Hits: {hitCount}</p>
+          <p>Bad Hits: {badHitCount}</p>
+          <p>Unhit Gems: {unhitGemsCount - 4}</p>
+          <button
+            onClick={handleRestart}
+            style={{
+              marginTop: '20px',
+              padding: '10px 20px',
+              backgroundColor: 'lightgray',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            Restart
+          </button>
+        </div>
+      )}
     </div>
   );
 };
