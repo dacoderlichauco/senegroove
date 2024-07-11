@@ -1,4 +1,4 @@
-import { Gem, Countdown } from './types';
+import { Gem} from './types';
 
 export const loadGems = async (): Promise<Gem[]> => {
   try {
