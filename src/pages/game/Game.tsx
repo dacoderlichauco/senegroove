@@ -65,25 +65,7 @@ const Game: React.FC = () => {
     
 
 <div>
-      {/* <button onClick={handlePlayAll}>Start All Videos</button>
-      <div>
-        <ReactPlayer
-          ref={player1Ref}
-          url="/video_01.mp4"
-          controls={true}
-        />
-        <ReactPlayer
-          ref={player2Ref}
-          url="/easy_pattern.mp4"
-          controls={true}
-        />
-        <ReactPlayer
-          ref={player3Ref}
-          url="/video_04.mp4"
-          controls={true}
-        />
-      </div>
-    </div> */}
+      
     <Animation videoUrl="/Timeline 1.mov" leftKey="f" rightKey="j"/>
     </div>
 

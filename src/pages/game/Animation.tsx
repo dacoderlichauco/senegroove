@@ -156,6 +156,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     setShowScore(false);
     videoRef.current?.seekTo(0); // Restart the video
     setIsPlaying(true);
+    const unhitGemsCount = hitGems.filter(hit => !hit).length;
   };
 
   const unhitGemsCount = hitGems.filter(hit => !hit).length;
@@ -256,6 +257,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           <p>Hits: {hitCount}</p>
           <p>Bad Hits: {badHitCount}</p>
           <p>Unhit Gems: {unhitGemsCount - 4}</p>
+          <p>Final Score: {Math.round(100*((hitCount - badHitCount)/(hitCount + unhitGemsCount)))}%</p>
           <button
             onClick={handleRestart}
             style={{
