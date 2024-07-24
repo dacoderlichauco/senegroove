@@ -9,7 +9,7 @@ import AudioButton from "./pages/familiarize/AudioButton";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Familiarize from "./pages/familiarize/Familiarize";
-import Game from "./pages/game/Game";
+import Game from "./pages/game/Lesson_1";
 
 function App() {
   // const [isPlaying, setIsPlaying] = useState(false);
