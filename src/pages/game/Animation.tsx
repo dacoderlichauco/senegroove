@@ -9,11 +9,12 @@ interface GemData {
 
 interface AnimationProps {
   videoUrl: string;
-  leftKey: string;
-  rightKey: string;
+  gem_json_file: string;
+  x_cord_L: number;
+  x_cord_R: number;
 }
 
-const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) => {
+const Animation: React.FC<AnimationProps> = ({ videoUrl, gem_json_file, x_cord_L, x_cord_R }) => {
   const delta_y = window.innerHeight;
   const y_nb = 50; // Now bar position at the top of the screen
   const delta_t = 5;
@@ -37,7 +38,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/basic_rythm.json'); // Adjust the path accordingly
+        const response = await fetch(gem_json_file); // Adjust the path accordingly
         const data: GemData[] = await response.json();
         setGemData(data);
         setHitGems(new Array(data.length).fill(false));
@@ -47,7 +48,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     };
 
     fetchData();
-  }, []);
+  }, [gem_json_file]);
 
   // Function to update gem positions based on the current time
   const updateGemPositions = (t: number) => {
@@ -75,11 +76,11 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
     if (!keyStates[event.key]) { // Only process if the key was not already pressed
       keyStates[event.key] = true;
       let isBadHit = true;
-      if (event.key === leftKey || event.key === rightKey) {
-        if (event.key === leftKey) {
+      if (event.key === 'f' || event.key === 'j') {
+        if (event.key === 'f') {
           setLeftKeyActive(true);
         }
-        if (event.key === rightKey) {
+        if (event.key === 'j') {
           setRightKeyActive(true);
         }
         if (videoRef.current) {
@@ -87,7 +88,7 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           gemData.forEach((entry, index) => {
             const gemTime = parseFloat(entry.TIME);
             const gemLabel = entry.LABEL.toLowerCase();
-            const isMatchingLabel = (gemLabel === 'j' && event.key === rightKey) || (gemLabel === 'f' && event.key === leftKey);
+            const isMatchingLabel = (gemLabel === 'j' && event.key === 'j') || (gemLabel === 'f' && event.key === 'f');
             if (Math.abs(gemTime - currentTime) <= hitWindow && isMatchingLabel) {
               if (!hitGems[index]) {
                 setHitGems(prevHitGems => {
@@ -111,10 +112,10 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
   // Function to handle key release
   const handleKeyRelease = (event: KeyboardEvent) => {
     keyStates[event.key] = false; // Reset key state
-    if (event.key === leftKey) {
+    if (event.key === 'f') {
       setLeftKeyActive(false);
     }
-    if (event.key === rightKey) {
+    if (event.key === 'j') {
       setRightKeyActive(false);
     }
   };
@@ -126,12 +127,12 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
       window.removeEventListener('keydown', handleKeyPress);
       window.removeEventListener('keyup', handleKeyRelease);
     };
-  }, [gemData, hitGems, leftKey, rightKey]); // Re-adding dependencies here
+  }, [gemData, hitGems]); // Re-adding dependencies here
 
   // Function to determine gem x position based on label
   const getGemXPosition = (label: string) => {
-    if (label.toLowerCase() === 'j') return 75; // 80% from the left
-    if (label.toLowerCase() === 'f') return 35; // 20% from the left
+    if (label.toLowerCase() === 'j') return x_cord_R; // Use the prop for x-coordinate of right gems
+    if (label.toLowerCase() === 'f') return x_cord_L; // Use the prop for x-coordinate of left gems
     return 50; // Default to center
   };
 
@@ -198,8 +199,8 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           onEnded={handleVideoEnd}
         />
       </div>
-      <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: '50%', height: 50, backgroundColor: leftKeyActive ? '#B3B300' : 'yellow' }} />
-      <div className="absolute" style={{ top: delta_y - y_nb, left: '50%', width: '50%', height: 50, backgroundColor: rightKeyActive ? '#B3B300' : 'yellow' }} />
+      <div className="absolute" style={{ top: delta_y - y_nb, left: 0, width: '50%', height: 50, backgroundColor: leftKeyActive ? '#B3B300' : 'yellow', textAlign:'center',fontSize:30 }} >F</div>
+      <div className="absolute" style={{ top: delta_y - y_nb, left: '50%', width: '50%', height: 50, backgroundColor: rightKeyActive ? '#B3B300' : 'yellow' , textAlign:'center',fontSize:30}}>J</div>
       {gemPositions.map((pos, index) => (
         pos <= window.innerHeight && (
           <Gem
@@ -256,8 +257,8 @@ const Animation: React.FC<AnimationProps> = ({ videoUrl, leftKey, rightKey }) =>
           <h2>Total Score</h2>
           <p>Hits: {hitCount}</p>
           <p>Bad Hits: {badHitCount}</p>
-          <p>Unhit Gems: {unhitGemsCount - 4}</p>
-          <p>Final Score: {Math.round(100*((hitCount - badHitCount)/(hitCount + unhitGemsCount)))}%</p>
+          <p>Unhit Gems: {unhitGemsCount}</p>
+          <p>Final Score: {Math.round(100 * ((hitCount - badHitCount) / (hitCount + unhitGemsCount)))}%</p>
           <button
             onClick={handleRestart}
             style={{

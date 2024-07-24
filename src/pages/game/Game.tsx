@@ -66,7 +66,7 @@ const Game: React.FC = () => {
 
 <div>
       
-    <Animation videoUrl="/Timeline 1.mov" leftKey="f" rightKey="j"/>
+    <Animation videoUrl="/Timeline 1.mov" gem_json_file='/basic_rythm.json' x_cord_L={35} x_cord_R={75}/>
     </div>
 
   );
